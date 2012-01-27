@@ -57,9 +57,13 @@ var adminPageSettings = {
 			var mapTypeControl_flag = adminPageSettings.mapTypeControl_init();
 			var mapTypeControl_option = adminPageSettings.mapTypeControl_option();
 			var mapTypeControl_position = adminPageSettings.position_option($("#map_type_position").val());
+			
+			var scaleControl_flag = adminPageSettings.scale_init();
+			var scaleControl_position = adminPageSettings.position_option($("#scale_control_position").val());
+			
+			var streetControl_flag = adminPageSettings.street_init();
+			var streetControl_position = adminPageSettings.position_option($("#street_view_position").val());
 
-			
-			
 			
 			/*setmap options*/
 			 var myOptions = {
@@ -77,15 +81,22 @@ var adminPageSettings = {
 			    mapTypeControlOptions: {
 			          style: mapTypeControl_option,
 			          position: mapTypeControl_position
+			        },    
+			   scaleControl: scaleControl_flag,
+			   scaleControlOptions: {
+			         position: scaleControl_position
 			        },
+		        streetViewControl: streetControl_flag,
+		        streetViewControlOptions: {
+		            position: streetControl_position
+		        }
 			  }
 			 
 			 Googlemap.map_init(myOptions);
 			 
 			 /*get the markers or locations*/
 				var aMarkers = adminPageSettings.get_locations();
-				
-				
+		
 				/*loop and create markers in map*/
 				$.each(aMarkers, function(key, val){
 					Googlemap.marker_init(val.loc,val.lat,val.lng,val.marker);
@@ -95,35 +106,7 @@ var adminPageSettings = {
 		},
 		
 		
-		/*set map type control*/
-		mapTypeControl_init: function(){
-			
-			var bControl = $('input:checkbox[name=map_type_control]').is(':checked') ? true : false;
-			
-			(bControl == true)?$("#map_type").removeAttr('disabled'):$("#map_type").attr('disabled', 'true');
-			(bControl == true)?$("#map_type_position").removeAttr('disabled'):$("#map_type_position").attr('disabled', 'true');
-			
-			return bControl;
-			
-		},
-		
-		/*
-		 * set map type option
-		 */
-		mapTypeControl_option: function(){
-			
-			var map_type = $("#map_type").val();
-			
-			switch(map_type){
-			case "0":
-			return google.maps.MapTypeControlStyle.BAR
-			break;
-			case "1":
-				return google.maps.MapTypeControlStyle.DROPDOWN_MENU
-			break;
-			}
 	
-		},
 		
 		/*
 		 * set zoom
@@ -155,6 +138,59 @@ var adminPageSettings = {
 	
 		},
 		
+			/*set map type control*/
+		mapTypeControl_init: function(){
+			
+			var bControl = $('input:checkbox[name=map_type_control]').is(':checked') ? true : false;
+			
+			(bControl == true)?$("#map_type").removeAttr('disabled'):$("#map_type").attr('disabled', 'true');
+			(bControl == true)?$("#map_type_position").removeAttr('disabled'):$("#map_type_position").attr('disabled', 'true');
+			
+			return bControl;
+			
+		},
+		
+		/*
+		 * set map type option
+		 */
+		mapTypeControl_option: function(){
+			
+			var map_type = $("#map_type").val();
+			
+			switch(map_type){
+			case "0":
+			return google.maps.MapTypeControlStyle.BAR
+			break;
+			case "1":
+				return google.maps.MapTypeControlStyle.DROPDOWN_MENU
+			break;
+			}
+	
+		},
+		
+		/*set scale control*/
+		scale_init: function(){
+			
+			var bControl = $('input:checkbox[name=scale_control]').is(':checked') ? true : false;
+			
+			(bControl == true)?$("#scale_control_position").removeAttr('disabled'):$("#scale_control_position").attr('disabled', 'true');
+			
+			return bControl;
+			
+		},
+		
+		/*set street view control*/
+		street_init: function(){
+			
+			var bControl = $('input:checkbox[name=street_view_control]').is(':checked') ? true : false;
+			
+			(bControl == true)?$("#street_view_position").removeAttr('disabled'):$("#street_view_position").attr('disabled', 'true');
+			
+			return bControl;
+			
+		},
+		
+		/*give the position for the controllers*/
 		position_option: function(val){
 			
 			switch(val) {
@@ -275,7 +311,8 @@ var adminPageSettings = {
 			
 			var sData = '';
 			sData += '<div class="add_location" id="'+adminPageSettings.APP_NAME+'_marker_con_'+id+'" >';
-			sData += '<input type="text"  value="'+locations+' ('+lat+','+lng+','+marker_type+')" readonly name="'+adminPageSettings.APP_NAME+'_marker[]"  class="textbox" style="width:300px" />';
+			sData += '<img src="/_sdk/img/'+adminPageSettings.APP_NAME+'/icon_marker_0'+marker_type+'.png" />';
+			sData += '<input type="text"  value="'+locations+' ('+lat+','+lng+','+marker_type+')" readonly name="'+adminPageSettings.APP_NAME+'_marker[]"  class="textbox" style="width:350px" />';
 			sData += '<a  href="javascript:adminPageSettings.remove_location('+id+');"  > <img src="/_sdk/img/mapquestmap/close_btn.gif" class="close_btn" style="vertical-align:middle;display:inline-block" /></a>';	
 			sData += '</div>';
 			
@@ -832,11 +869,11 @@ var Googlemap = {
 
 $(document).ready(function(){
 	
-	$('#zoom_control, #map_type_control').click(function() {
+	$('#zoom_control, #map_type_control,#scale_control,#street_view_control').click(function() {
 		adminPageSettings.initialize();
 	});
 	
-	$('#zoom_size, #map_type, #zoom_position, #map_type_position').change(function() {
+	$('#zoom_size, #map_type, #zoom_position, #map_type_position,#scale_control_position,#street_view_position').change(function() {
 		adminPageSettings.initialize();
 	});
 	
