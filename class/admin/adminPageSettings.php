@@ -38,7 +38,7 @@ class adminPageSettings extends Controller_Admin
     				'zoom_level' => 1,
     				'map_type' => 0,
     				'caption' => "Hello World",
-    				'locations' => '[{"loc":"Los Angeles, CA, USA","lat":"34.0522342","lng":"-118.2436849"},{"loc":"Las Vegas, NV, USA","lat":"36.114646","lng":"-115.172816"},{"loc":"Manila, Philippines","lat":"14.5995124","lng":"120.9842195"}]',
+    				'locations' => '[{"loc":"Los Angeles, CA, USA","lat":"34.0522342","lng":"-118.2436849","marker_type":"3"},{"loc":"Gleason, WI 54435, USA","lat":"45.3662588","lng":"-89.3828135","marker_type":"2"}]',
     				'display_options' => '[{
     										"zoom":{"zoom_flag":"0","zoom_size":"small","zoom_position":"Top left"},
     										"map":{"map_flag":"0","map_type":"bar","map_position":"Right top"},

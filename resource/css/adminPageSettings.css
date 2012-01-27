@@ -4,3 +4,25 @@ a{text-decoration:none !important;}
 a:hover{text-decoration:underline !important;}
 
 #googlemapmarker_loader{margin:30px 0 0 160px}
+
+
+.module_title {text-decoration:none;background: url("../images/right_scroll.gif") no-repeat center right; padding-right:5px;cursor:pointer;}
+.symb_style {font-size:12px;font-weight:bold;font-style:normal;text-decoration:none;color:#000000;}
+
+.tbl_option {margin-top:5px;margin-left:115px}
+
+/* float */
+.fl {float:left !important}
+.fr {float:rigth !important}
+
+/* margin */
+
+.sml {margin-left:5px !important}
+.smt {margin-top:2px !important}
+
+.width_1 {width:55px}
+
+.tbl_option td {padding-bottom:3px}
+
+.radio_btn_search {float:left !important;width:auto !important;margin:0 !important}
+.radio_btn_label {float:left !important;margin:0 0 0 5px!important}

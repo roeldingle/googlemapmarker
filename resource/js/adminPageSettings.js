@@ -3,25 +3,199 @@ var adminPageSettings = {
 		/*set global variables*/
 		APP_NAME: $("#APP_NAME").val(),
 		
+		
 		/*
 		 * initialize and define the map for preview
 		 */
-		init_map: function(){
-			
+		initialize: function(){
 			/*give the map canvas its size*/
 			$("#map_canvas").css("width","600px");
 			$("#map_canvas").css("height","450px");
 			 
 			/*call the map init func*/
-			Googlemap.initialize();
+			adminPageSettings.create_map();	
+		},
+		
+		/*
+		 * create the map
+		 */	
+		create_map: function(){
+
 			
-			/*get the markers or locations*/
-			var aMarkers = adminPageSettings.get_locations();
-			/*loop and create markers in map*/
-			$.each(aMarkers, function(key, val){
-				adminPageSettings.add_location(val.loc,val.lat,val.lng);
+			/*get center lat lng*/
+			var aMarkerData = adminPageSettings.get_locations();
+			var iLastMarker = aMarkerData.length - 1;
 			
-			});
+			loc = $("#"+adminPageSettings.APP_NAME+"_cen_loc").val()
+			lat = aMarkerData[iLastMarker]['lat']
+			lng = aMarkerData[iLastMarker]['lng']
+			
+			/*get zoomlevel*/
+			zoom = parseInt($("#"+adminPageSettings.APP_NAME+"_zoom").val());  //set zoom level
+			
+			/*get the maptype*/
+			switch($("#"+adminPageSettings.APP_NAME+"_maptype").val()){
+			case "Normal":
+				maptype = google.maps.MapTypeId.ROADMAP;
+				break;
+			case "Satellite":
+				maptype = google.maps.MapTypeId.SATELLITE;
+				break;
+			case "Hybrid":
+				maptype = google.maps.MapTypeId.HYBRID;
+				break;
+			case "Terrain":
+				maptype = google.maps.MapTypeId.TERRAIN;
+				break;
+			}
+			
+			/*setup the controllers*/
+			var zoomControl_flag = adminPageSettings.zoom_init();
+			var zoomControl_option = adminPageSettings.zoom_option();
+			var zoomControl_position = adminPageSettings.position_option($("#zoom_position").val());
+			
+			var mapTypeControl_flag = adminPageSettings.mapTypeControl_init();
+			var mapTypeControl_option = adminPageSettings.mapTypeControl_option();
+			var mapTypeControl_position = adminPageSettings.position_option($("#map_type_position").val());
+
+			
+			
+			
+			/*setmap options*/
+			 var myOptions = {
+				disableDefaultUI: true,
+				panControl: false,
+			    zoom: zoom,
+			    center: new google.maps.LatLng(lat, lng),
+			    mapTypeId: maptype,
+			    zoomControl: zoomControl_flag,
+			    zoomControlOptions: {
+			        style: zoomControl_option,
+			        position: zoomControl_position
+			    	},
+			    mapTypeControl: mapTypeControl_flag,
+			    mapTypeControlOptions: {
+			          style: mapTypeControl_option,
+			          position: mapTypeControl_position
+			        },
+			  }
+			 
+			 Googlemap.map_init(myOptions);
+			 
+			 /*get the markers or locations*/
+				var aMarkers = adminPageSettings.get_locations();
+				
+				
+				/*loop and create markers in map*/
+				$.each(aMarkers, function(key, val){
+					Googlemap.marker_init(val.loc,val.lat,val.lng,val.marker);
+				
+				});
+			
+		},
+		
+		
+		/*set map type control*/
+		mapTypeControl_init: function(){
+			
+			var bControl = $('input:checkbox[name=map_type_control]').is(':checked') ? true : false;
+			
+			(bControl == true)?$("#map_type").removeAttr('disabled'):$("#map_type").attr('disabled', 'true');
+			(bControl == true)?$("#map_type_position").removeAttr('disabled'):$("#map_type_position").attr('disabled', 'true');
+			
+			return bControl;
+			
+		},
+		
+		/*
+		 * set map type option
+		 */
+		mapTypeControl_option: function(){
+			
+			var map_type = $("#map_type").val();
+			
+			switch(map_type){
+			case "0":
+			return google.maps.MapTypeControlStyle.BAR
+			break;
+			case "1":
+				return google.maps.MapTypeControlStyle.DROPDOWN_MENU
+			break;
+			}
+	
+		},
+		
+		/*
+		 * set zoom
+		 */
+		zoom_init: function(){
+			var bControl = $('input:checkbox[name=zoom_control]').is(':checked') ? true : false;
+			
+			(bControl == true)?$("#zoom_size").removeAttr('disabled'):$("#zoom_size").attr('disabled', 'true');
+			(bControl == true)?$("#zoom_position").removeAttr('disabled'):$("#zoom_position").attr('disabled', 'true');
+			
+			return bControl;
+		},
+		
+		/*
+		 * set zoom options
+		 */
+		zoom_option: function(){
+			
+			var zoom_type = $("#zoom_size").val();
+			
+			switch(zoom_type){
+			case "0":
+			return google.maps.ZoomControlStyle.SMALL;
+			break;
+			case "1":
+			return google.maps.ZoomControlStyle.LARGE;
+			break;
+			}
+	
+		},
+		
+		position_option: function(val){
+			
+			switch(val) {
+			case '1':
+				pos = google.maps.ControlPosition.TOP_RIGHT;
+				break;
+			case '2':
+				pos = google.maps.ControlPosition.TOP_CENTER;
+				break;
+			case '3':
+				pos = google.maps.ControlPosition.LEFT_TOP;
+				break;
+			case '4':
+				pos = google.maps.ControlPosition.LEFT_CENTER;
+				break;
+			case '5':
+				pos = google.maps.ControlPosition.LEFT_BOTTOM;
+				break;
+			case '6':
+				pos = google.maps.ControlPosition.RIGHT_TOP;
+				break;
+			case '7':
+				pos = google.maps.ControlPosition.RIGHT_CENTER;
+				break;
+			case '8':
+				pos = google.maps.ControlPosition.RIGHT_BOTTOM;
+				break;
+			case '9':
+				pos = google.maps.ControlPosition.BOTTOM_LEFT;
+				break;
+			case '10':
+				pos = google.maps.ControlPosition.BOTTOM_RIGHT;
+				break;
+			case '11':
+				pos = google.maps.ControlPosition.BOTTOM_CENTER;
+				break;
+			default:
+				pos = google.maps.ControlPosition.TOP_LEFT;	
+		}
+		
+		return pos;
 			
 		},
 		
@@ -42,7 +216,7 @@ var adminPageSettings = {
 			/*set interval if no data receive after 1 min*/
 			var s = setTimeout(function(){
 				$("#"+adminPageSettings.APP_NAME+"_loader").remove();
-				$("#"+adminPageSettings.APP_NAME+"_result").append("<p class='error_message'>Error retriving data.<p>");
+				$("#"+adminPageSettings.APP_NAME+"_err_con").append("<p class='error_message'>Error retriving data.<p>");
 				return;
 				}
 				,60000);
@@ -57,15 +231,17 @@ var adminPageSettings = {
 						get_search: sAddress
 					},
 				success: function(data){
-					$("#"+adminPageSettings.APP_NAME+"_result").empty();
-						string = '';
+		
 						if (data['Data'].length > 0){
+							$("#"+adminPageSettings.APP_NAME+"_result").empty();
+							string = '';
+							i = 0;
 							$.each(data['Data'], function(key, val){
-								string += '<li><span class="desc"><a href="javascript:adminPageSettings.add_location(\'' + val['sAdd'] + '\','+val['sLat']+','+val['sLng']+')">' + val['sAdd'] + '</a></span></li>';
-								
+								string += '<li ><input class="radio_btn_search" type="radio" id="marker_loc_'+i+'" name="marker_loc" value="'+val['sAdd']+'+'+val['sLat']+'+'+val['sLng']+'" /><label  class="radio_btn_label" for="marker_loc_'+i+'">' + val['sAdd'] + '</label></li>';
+								i++;
 								});
 							$("#"+adminPageSettings.APP_NAME+"_result").append(string);    	
-						}else {
+						}else{
 							$("#"+adminPageSettings.APP_NAME+"_result").append("<p class='error_message'>No results found.<p>");
 						}
 						
@@ -77,20 +253,35 @@ var adminPageSettings = {
 		/*
 		 * add the locations
 		 */
-		add_location: function(locations,lat,lng){
+		add_location: function(){
 			
+			/*close marker options popup*/
+			adminPageSettings.close_popup(adminPageSettings.APP_NAME+"_marker_options");
+			
+			var marker_loc = $('input:radio[name=marker_loc]:checked').val();
+			var aMarker_loc = marker_loc.split("+",3);
+			
+			var locations = aMarker_loc[0];
+			var lat = parseFloat(aMarker_loc[1]);
+			var lng = parseFloat(aMarker_loc[2]);
+				
+			
+			/*set the added options to the marker*/
+			var marker_type = $('input:radio[name=marker_type]:checked').val();
+
+	
 			/*get the size of the div con*/
 			var id = $("#"+adminPageSettings.APP_NAME+"_location_wrap").children("div").size() +1;
 			
 			var sData = '';
-			sData = '<div class="add_location" id="'+adminPageSettings.APP_NAME+'_marker_con_'+id+'" >';
-			sData = '<input type="text"  value="'+locations+' ('+lat+','+lng+')" readonly name="'+adminPageSettings.APP_NAME+'_marker[]"  class="textbox" style="width:300px" />';
-			sData = '<a  href="javascript:adminPageSettings.remove_location('+id+');"  ><img src="/_sdk/img/mapquestmap/close_btn.gif" class="close_btn" style="vertical-align:middle;display:inline-block" /></a>';	
-			sData = '</div>';
+			sData += '<div class="add_location" id="'+adminPageSettings.APP_NAME+'_marker_con_'+id+'" >';
+			sData += '<input type="text"  value="'+locations+' ('+lat+','+lng+','+marker_type+')" readonly name="'+adminPageSettings.APP_NAME+'_marker[]"  class="textbox" style="width:300px" />';
+			sData += '<a  href="javascript:adminPageSettings.remove_location('+id+');"  > <img src="/_sdk/img/mapquestmap/close_btn.gif" class="close_btn" style="vertical-align:middle;display:inline-block" /></a>';	
+			sData += '</div>';
 			
 			$("#"+adminPageSettings.APP_NAME+"_location_wrap").append(sData);
 			
-			Googlemap.marker_init(locations,lat,lng);
+			Googlemap.marker_init(locations,lat,lng,marker_type);
 			
 		},
 		
@@ -103,12 +294,14 @@ var adminPageSettings = {
 			var lat;
 			var lng;
 			var lng_len;
+			var marker;
 			var location_str;
 			var idx;
 			var locations = new Array();
 			var sData = new Array;
 			var aLocation = new Array();
 			var aLatlng = new Array();
+			var aMarCap = new Array();
 			var i = 0;
 			var id = $("#"+adminPageSettings.APP_NAME+"_location_wrap").children("div").size();
 			
@@ -125,13 +318,14 @@ var adminPageSettings = {
 					aLocation = locations[index].split("(");
 					aLocation['loc'] = aLocation[0];
 					aLocation['latlng'] = aLocation[1];
+								
 					aLatlng = aLocation['latlng'].split(",");
-					
 					lat = parseFloat(aLatlng[0]);
-					lng_len = aLatlng[1].length;
-					lng = parseFloat(aLatlng[1].substr(0,lng_len-1));
-					
-					sData[i] = {lat: lat, lng: lng,loc: aLocation['loc']};
+					lng = parseFloat(aLatlng[1]);
+					lng_len = aLatlng[2].length;
+					marker = parseInt(aLatlng[2].substr(0,lng_len-1));
+
+					sData[i] = {lat: lat, lng: lng,loc: aLocation['loc'],marker: marker};
 				});
 				i++;
 			});	
@@ -145,16 +339,13 @@ var adminPageSettings = {
 		 * @param aDecs = define the description for the dialog box
 		 */
 		open_popup: function(sContainer,iWidth,sTitle){
-			
 			/*create popup*/
 			popup.load(sContainer).skin("admin").layer({
 				width: iWidth,
 				title: sTitle,
 				resize: false,
-				draggable: false	
+				draggable: true	
 			});
-			
-			
 			
 		},
 		
@@ -182,7 +373,8 @@ var Googlemap = {
 	map : null,
 	zoom : null,
 	maptype: null,
-	marker:null,
+	markers: new Array(),
+	markersArray: new Array(),
 	center : '',
 	address : "USA",
 	geocoder : '',
@@ -196,64 +388,35 @@ var Googlemap = {
 	/*
 	 * create the map object and display in map_canvas
 	 */
-	initialize : function(myOptions)
+	map_init : function(myOptions)
 	{
-		
-		 /*get center lat lng*/
-		loc = $("#"+adminPageSettings.APP_NAME+"_cen_loc").val()
-		lat = parseFloat($("#"+adminPageSettings.APP_NAME+"_lat").val()); 
-		lng = parseFloat($("#"+adminPageSettings.APP_NAME+"_lng").val()); 
-		
-		/*get zoomlevel*/
-		Googlemap.zoom = parseInt($("#"+adminPageSettings.APP_NAME+"_zoom").val());  //set zoom level
-		
-		/*get the maptype*/
-		switch($("#"+adminPageSettings.APP_NAME+"_maptype").val()){
-		case "Normal":
-			Googlemap.maptype = google.maps.MapTypeId.ROADMAP;
-			break;
-		case "Satellite":
-			Googlemap.maptype = google.maps.MapTypeId.SATELLITE;
-			break;
-		case "Hybrid":
-			Googlemap.maptype = google.maps.MapTypeId.HYBRID;
-			break;
-		case "Terrain":
-			Googlemap.maptype = google.maps.MapTypeId.TERRAIN;
-			break;
-		}
-		
-		/*setmap options*/
-		 var myOptions = {
-			disableDefaultUI: true,
-			panControl: false,
-		    zoom: Googlemap.zoom,
-		    center: new google.maps.LatLng(lat, lng),
-		    mapTypeId: Googlemap.maptype
-		  }
-		 
-		 
-		 
-		 /*create the map*/
-		 Googlemap.map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-		 
-		
-			
-			Googlemap.marker_init(loc,lat,lng);
+	 Googlemap.map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);	
 	},
 	
 	
-	marker_init: function(locations,lat,lng){
+	marker_init: function(locations,lat,lng,marker_type){
 		
-		Googlemap.marker = new google.maps.Marker({
+		Googlemap.markers = new google.maps.Marker({
 			  position: new google.maps.LatLng(lat,lng),
 			  map: Googlemap.map,
-			  title: 'My workplace',
+			  title: locations,
 			  clickable: true,
-			  draggable: true
-			 // icon: 'http://google-maps-icons.googlecode.com/files/factory.png'
+			  draggable: true,
+			  icon: '/_sdk/img/'+adminPageSettings.APP_NAME+'/icon_marker_0'+marker_type+'.png'
 			});
+		
 	},
+	/*
+	deleteOverlays : function() 
+	{
+		if (markersArray) {
+			for (i in markersArray) {
+			  markersArray[i].setMap(null);
+			}
+			markersArray.length = 0;
+		}
+	}, 
+	*/
 	
 	
 	
@@ -270,30 +433,6 @@ var Googlemap = {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	geocode_search : function(sAddress){	
-		var str = '';
-        Googlemap.geocoder.geocode({'address':sAddress}, function(results, status) {
-            if(status=='ZERO_RESULTS'){
-                str = '<li>Results not found. Please try a different search.</li>';
-            }else{
-                for(var i = 0; i < results.length; i++) {
-					var chkd = i == 0 ? "checked" : "";
-					var latlng = results[i].geometry.location.lat()+','+results[i].geometry.location.lng();
-					str += '<li><input type="radio" name="place_group" value="'+latlng+'" id="place_group_'+i+'" title="'+results[i].formatted_address+'" class="input_rdo" '+chkd+'/><label for="place_group_'+i+'">' + results[i].formatted_address + '</label></li>';
-				}
-                
-            }
-            
-            return str;
-        });    
-          
-	},
 	
 	
 	
@@ -460,15 +599,7 @@ var Googlemap = {
 		});
 	},
 
-	deleteOverlays : function() 
-	{
-		if (markersArray) {
-			for (i in markersArray) {
-			  markersArray[i].setMap(null);
-			}
-			markersArray.length = 0;
-		}
-	}, 
+	
 
 	setZoomControl : function()
     {
@@ -701,33 +832,17 @@ var Googlemap = {
 
 $(document).ready(function(){
 	
-	adminPageSettings.init_map();
-	/*
-	var aDesc ={
-		con: "google_map_marker_search",
-		width: 400,
-		title: "Test"
-			
-	}
-	adminPageSettings.open_popup(aDesc);
-	*/
-	
-	
-	
-	
-	$('#google_map_search_field').live('keyup', function(e){
-		var code = e.keyCode ? e.keyCode : e.which;
-		if(code == 13) Googlemap.searchX();
+	$('#zoom_control, #map_type_control').click(function() {
+		adminPageSettings.initialize();
 	});
+	
+	$('#zoom_size, #map_type, #zoom_position, #map_type_position').change(function() {
+		adminPageSettings.initialize();
+	});
+	
+	
+	adminPageSettings.initialize();
+	
 
-	$('#google_map_marker_search_field').live('keyup', function(e){
-		var code = e.keyCode ? e.keyCode : e.which;
-		if(code == 13) adminPageSettings.openPopupMarkerSearch();
-	});
-
-	$('#google_map_mark_search_field').live('keyup', function(e){
-		var code = e.keyCode ? e.keyCode : e.which;
-		if(code == 13) Googlemap.searchXMark();;
-	});
 
 });
