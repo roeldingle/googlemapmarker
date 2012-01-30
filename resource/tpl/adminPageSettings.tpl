@@ -69,7 +69,7 @@
 				<?php  $counter = 0; foreach($aMarkers as $val){ ?>
 					<div class="add_location" id="<?php echo $APP_NAME;?>_marker_con_<?php echo $counter;?>" >
 						<img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_0<?php echo $val['marker'];?>.png" />
-						<input type="text"  value="<?php echo $val['loc'];?> (<?php echo $val['lat'];?>,<?php echo $val['lng'];?>,<?php echo $val['marker'];?>)" readonly name="<?php echo $APP_NAME;?>_marker[]"  class="textbox" value="" style="width:350px" />
+						<input type="text"  value="<?php echo $val['loc'];?>(<?php echo $val['lat'];?>,<?php echo $val['lng'];?>,<?php echo $val['marker'];?>)" readonly name="<?php echo $APP_NAME;?>_marker[]"  class="textbox" value="" style="width:350px" />
 						<a  href="javascript:adminPageSettings.remove_marker(<?php echo $counter;?>);"  ><img src="/_sdk/img/<?php echo $APP_NAME;?>/close_btn.png" class="close_btn" style="vertical-align:middle;display:inline-block" /></a>	
 					</div>
 				<?php $counter++; } ?>

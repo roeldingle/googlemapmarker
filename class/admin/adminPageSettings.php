@@ -27,6 +27,7 @@ class adminPageSettings extends Controller_Admin
     	$sGooglemaps_url = 'https://maps.googleapis.com/maps/api/js?v=3&sensor=true';
     	$this->externalJS($sGooglemaps_url);
     	$this->importJS(__CLASS__);
+    	$this->importJS("Googlemaps");
     	$this->importCSS(__CLASS__);
     	
     	/*save form validator*/
