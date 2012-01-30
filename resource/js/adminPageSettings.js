@@ -3,6 +3,94 @@ var adminPageSettings = {
 		/*set global variables*/
 		APP_NAME: $("#APP_NAME").val(),
 		
+		/*reset to default*/
+		reset_default: function(){
+			window.location= usbuilder.getUrl("adminPageSettings")+"&reset=true";
+			
+		},
+		/*remove marker*/
+		remove_marker: function(div_id){
+			
+			$("#googlemapmarker_marker_con_"+div_id).remove();
+			adminPageSettings.initialize();
+			
+		},
+		/*display options*/
+		displayOption: function(){
+			
+			var image = $("#pg_disqus_arrow img").attr("src");
+			var img_up = "/_sdk/img/"+adminPageSettings.APP_NAME+"/arrow_up.png";
+			var img_down = "/_sdk/img/"+adminPageSettings.APP_NAME+"/arrow_down.png";
+			
+			$("#pg_googlemapmark_option").slideToggle();
+			
+			if(image == img_up){
+				$("#pg_disqus_arrow img").attr("src",img_down);
+			}else{
+				$("#pg_disqus_arrow img").attr("src",img_up);
+			}
+			
+		},
+		/*save settings*/
+		setting_submit: function(form){
+			
+			
+			//if(oValidator.formName.getMessage(adminPageSettings.APP_NAME+'_form')){
+				
+				/*gather variables*/
+				var zoom_level = parseInt($("#"+adminPageSettings.APP_NAME+"_zoom").val());
+				var map_type = $("#"+adminPageSettings.APP_NAME+"_maptype").val();
+				var locations = adminPageSettings.get_locations();
+				var display_options ={
+						"zoom":{
+							"zoom_flag": $('input:checkbox[name=zoom_control]').is(':checked') ? 1 : 0 ,
+							"zoom_size": $("#zoom_size").val(),
+							"zoom_position": $("#zoom_position").val()
+								},
+						"map":{
+							"map_flag": $('input:checkbox[name=map_type_control]').is(':checked') ? 1 : 0,
+							"map_type": $("#map_type").val(),
+							"map_position": $("#map_type_position").val()
+								},
+						"scale":{
+							"scale_flag": $('input:checkbox[name=scale_control]').is(':checked') ? 1 : 0,
+							"scale_position": $("#scale_control_position").val()
+								},
+						"street":{
+							"street_flag": $('input:checkbox[name=street_view_control]').is(':checked') ? 1 : 0,
+							"street_position": $("#street_view_position").val()
+								}
+						
+					} 
+		
+					$.ajax({  
+						url: usbuilder.getUrl("apiExec"),
+						type: 'post',
+						dataType: 'json',
+						data: {
+						action: 'setting_submit',
+						get_zoom_level: zoom_level,
+						get_map_type: map_type,
+						get_locations: locations,
+						get_display_options: display_options
+						
+					},
+						success: function(data){
+						
+						if(data.Data === true){
+							adminPageSettings.close_popup(adminPageSettings.APP_NAME+"_add_marker");
+							oValidator.generalPurpose.getMessage(true, "Saved successfully");
+							scroll(0,0);
+							}else{
+								oValidator.generalPurpose.getMessage(false, "Failed");
+								scroll(0,0);
+							}
+					
+						}
+					});
+			//}
+			
+		},
 		
 		/*
 		 * initialize and define the map for preview
@@ -104,10 +192,7 @@ var adminPageSettings = {
 				});
 			
 		},
-		
-		
-	
-		
+
 		/*
 		 * set zoom
 		 */
@@ -291,8 +376,7 @@ var adminPageSettings = {
 		 */
 		add_location: function(){
 			
-			/*close marker options popup*/
-			adminPageSettings.close_popup(adminPageSettings.APP_NAME+"_marker_options");
+			
 			
 			var marker_loc = $('input:radio[name=marker_loc]:checked').val();
 			var aMarker_loc = marker_loc.split("+",3);
@@ -307,13 +391,13 @@ var adminPageSettings = {
 
 	
 			/*get the size of the div con*/
-			var id = $("#"+adminPageSettings.APP_NAME+"_location_wrap").children("div").size() +1;
+			var id = $("#"+adminPageSettings.APP_NAME+"_location_wrap").children("div").size();
 			
 			var sData = '';
 			sData += '<div class="add_location" id="'+adminPageSettings.APP_NAME+'_marker_con_'+id+'" >';
-			sData += '<img src="/_sdk/img/'+adminPageSettings.APP_NAME+'/icon_marker_0'+marker_type+'.png" />';
+			sData += '<img src="/_sdk/img/'+adminPageSettings.APP_NAME+'/icon_marker_0'+marker_type+'.png" /> ';
 			sData += '<input type="text"  value="'+locations+' ('+lat+','+lng+','+marker_type+')" readonly name="'+adminPageSettings.APP_NAME+'_marker[]"  class="textbox" style="width:350px" />';
-			sData += '<a  href="javascript:adminPageSettings.remove_location('+id+');"  > <img src="/_sdk/img/mapquestmap/close_btn.gif" class="close_btn" style="vertical-align:middle;display:inline-block" /></a>';	
+			sData += '<a  href="javascript:adminPageSettings.remove_marker('+id+');"  > <img src="/_sdk/img/'+adminPageSettings.APP_NAME+'/close_btn.png" class="close_btn" style="vertical-align:middle;display:inline-block" /></a>';	
 			sData += '</div>';
 			
 			$("#"+adminPageSettings.APP_NAME+"_location_wrap").append(sData);
@@ -376,6 +460,10 @@ var adminPageSettings = {
 		 * @param aDecs = define the description for the dialog box
 		 */
 		open_popup: function(sContainer,iWidth,sTitle){
+			
+			//empty the result list
+			$("#googlemapmarker_result").empty();
+			
 			/*create popup*/
 			popup.load(sContainer).skin("admin").layer({
 				width: iWidth,
@@ -395,10 +483,6 @@ var adminPageSettings = {
 		}
 	
 };
-
-
-
-
 
 
 /*
@@ -873,13 +957,11 @@ $(document).ready(function(){
 		adminPageSettings.initialize();
 	});
 	
-	$('#zoom_size, #map_type, #zoom_position, #map_type_position,#scale_control_position,#street_view_position').change(function() {
+	$('#googlemapmarker_zoom,#googlemapmarker_maptype, #zoom_size, #map_type, #zoom_position, #map_type_position,#scale_control_position,#street_view_position').change(function() {
 		adminPageSettings.initialize();
 	});
 	
 	
 	adminPageSettings.initialize();
-	
-
 
 });

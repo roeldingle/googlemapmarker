@@ -1,5 +1,5 @@
 <?php
-class modelGet extends Model{
+class modelExec extends Model{
 	
 	protected $PG_NAME = "googlemapmarker";
 	protected $PG_MAIN = null;
@@ -48,25 +48,50 @@ class modelGet extends Model{
 		return $sWhere;
 	}
 	
-	/*
-	desc: get a single row in database;
-		can be given a single WHERE condition
-	@param $iTable = ex.(1=PG_MAIN || 2=PG_SETTING || 3=PG_CONTENT);
-	@param $sWhere = ex.("field = 'samplefieldname'");
-	return $sTable = single row array;
-	*/
-	public function getRow($iTable,$sWhere)
-	{
-		
+	public function deleteData($iTable){
 		$this->init();
 		$sTable = $this->chooseTable($iTable);
-		$sWhere = $this->setWhere($sWhere);
-		$sSql = "SELECT * FROM ".$sTable." ".$sWhere;
-		
-		$mResult = $this->query($sSql, "row");
-		return $mResult;
-	
+		$bDeleted = $this->query("DELETE FROM ".$sTable);
+		$bResult = isset($bDeleted)?true:false;
+		return $bResult;
 	}
+	/*
+	 desc: insert datas
+	@param $iTable = ex.(1=PG_MAIN || 2=PG_SETTING || 3=PG_CONTENT);
+	@param $aData = ex.(array(field_name => 'samplefieldname',field_name2 => 'samplefieldname2',...));
+	return $bResult = true if the query is executed else false
+	*/
+	public function insertData($iTable,$aData)
+	{
+		$this->init();
+		$sTable = $this->chooseTable($iTable);
+		$sData = $this->processArrayData($aData);
+		$sSql = "INSERT INTO ".$sTable.$sData;
+		$bInsert = $this->query($sSql);
+		$bResult = isset($bInsert)?true:false;
+		return $bResult;
+	}
+	
+	
+	
+	
+	public function processArrayData($aData){
+		if($aData){
+			$sField = "";
+			$sValue = "";
+			foreach($aData as $field => $value)
+			{
+				$sField .= "`".$field."`,";
+				$sValue .= "'".$value."',";
+			}
+		}else{
+			$sData = "";
+		}
+		return $sData = "(".substr($sField,0,(strlen($sField)-1)).") VALUES (".substr($sValue,0,(strlen($sValue)-1)).")";
+	}
+	
+
+	
 		
 	
 }
