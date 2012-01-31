@@ -3,102 +3,19 @@ var adminPageSettings = {
 		/*set global variables*/
 		APP_NAME: $("#APP_NAME").val(),
 		
-		/*reset to default*/
-		reset_default: function(){
-			window.location= usbuilder.getUrl("adminPageSettings")+"&reset=true";
+		/*image url*/
+		enable_image_url: function(){
 			
-		},
-		/*remove marker*/
-		remove_marker: function(div_id){
+			var marker_type = $('input:radio[name=marker_type]:checked').val();
 			
-			var id = $("#"+adminPageSettings.APP_NAME+"_location_wrap").children("div").size();
-			
-			if(id > 1){
-				$("#googlemapmarker_marker_con_"+div_id).remove();
-				adminPageSettings.initialize();
-				
+
+			if(marker_type == 6) {
+				$("#"+adminPageSettings.APP_NAME+"_image_url").removeAttr("disabled");
+				$("#"+adminPageSettings.APP_NAME+"_image_url").val("");
 			}else{
-				$("#googlemapmarker_marker_con_"+div_id).append("<span style='color:red;font-style:italic;' class='err_div_loc' >You must maintain at least one(1) marker.</span>");
+				$("#"+adminPageSettings.APP_NAME+"_image_url").attr("disabled",true);
+				$("#"+adminPageSettings.APP_NAME+"_image_url").val("Input url for marker icon");
 			}
-			
-			
-			
-		},
-		/*display options*/
-		displayOption: function(){
-			
-			var image = $("#pg_disqus_arrow img").attr("src");
-			var img_up = "/_sdk/img/"+adminPageSettings.APP_NAME+"/arrow_up.png";
-			var img_down = "/_sdk/img/"+adminPageSettings.APP_NAME+"/arrow_down.png";
-			
-			$("#pg_googlemapmark_option").slideToggle();
-			
-			if(image == img_up){
-				$("#pg_disqus_arrow img").attr("src",img_down);
-			}else{
-				$("#pg_disqus_arrow img").attr("src",img_up);
-			}
-			
-		},
-		/*save settings*/
-		setting_submit: function(form){
-			
-			
-			//if(oValidator.formName.getMessage(adminPageSettings.APP_NAME+'_form')){
-				
-				/*gather variables*/
-				var zoom_level = parseInt($("#"+adminPageSettings.APP_NAME+"_zoom").val());
-				var map_type = $("#"+adminPageSettings.APP_NAME+"_maptype").val();
-				var locations = adminPageSettings.get_locations();
-				var display_options ={
-						"zoom":{
-							"zoom_flag": $('input:checkbox[name=zoom_control]').is(':checked') ? 1 : 0 ,
-							"zoom_size": $("#zoom_size").val(),
-							"zoom_position": $("#zoom_position").val()
-								},
-						"map":{
-							"map_flag": $('input:checkbox[name=map_type_control]').is(':checked') ? 1 : 0,
-							"map_type": $("#map_type").val(),
-							"map_position": $("#map_type_position").val()
-								},
-						"scale":{
-							"scale_flag": $('input:checkbox[name=scale_control]').is(':checked') ? 1 : 0,
-							"scale_position": $("#scale_control_position").val()
-								},
-						"street":{
-							"street_flag": $('input:checkbox[name=street_view_control]').is(':checked') ? 1 : 0,
-							"street_position": $("#street_view_position").val()
-								}
-						
-					} 
-		
-					$.ajax({  
-						url: usbuilder.getUrl("apiExec"),
-						type: 'post',
-						dataType: 'json',
-						data: {
-						action: 'setting_submit',
-						get_zoom_level: zoom_level,
-						get_map_type: map_type,
-						get_locations: locations,
-						get_display_options: display_options
-						
-					},
-						success: function(data){
-						
-						if(data.Data === true){
-							adminPageSettings.close_popup(adminPageSettings.APP_NAME+"_add_marker");
-							oValidator.generalPurpose.getMessage(true, "Saved successfully");
-							scroll(0,0);
-							}else{
-								oValidator.generalPurpose.getMessage(false, "Failed");
-								scroll(0,0);
-							}
-					
-						}
-					});
-			//}
-			
 		},
 		
 		/*
@@ -384,27 +301,56 @@ var adminPageSettings = {
 		 * add the locations
 		 */
 		add_location: function(){
-			
-			
-			
+
 			var marker_loc = $('input:radio[name=marker_loc]:checked').val();
 			var aMarker_loc = marker_loc.split("+",3);
 			
 			var locations = aMarker_loc[0];
 			var lat = parseFloat(aMarker_loc[1]);
 			var lng = parseFloat(aMarker_loc[2]);
-				
 			
 			/*set the added options to the marker*/
 			var marker_type = $('input:radio[name=marker_type]:checked').val();
+			
+			var image_url = $("#"+adminPageSettings.APP_NAME+"_image_url").val();
+			
+			/*image*/
+			if(marker_type == 6){
+				
+				
+				
+				var bIfUrl = adminPageSettings.validURL(image_url);
+				
+				if(bIfUrl){
+					image_icon = image_url;
+					marker_type = image_url;
+				}else{
+					$("#"+adminPageSettings.APP_NAME+"_image_url").prepend("Invalid url");
+					return;
+				}
+			
+			}else{
+				var image_icon = '/_sdk/img/'+adminPageSettings.APP_NAME+'/icon_marker_0'+marker_type+'.png';
+			}
 
 	
 			/*get the size of the div con*/
 			var id = $("#"+adminPageSettings.APP_NAME+"_location_wrap").children("div").size();
 			
+			
+			
 			var sData = '';
 			sData += '<div class="add_location" id="'+adminPageSettings.APP_NAME+'_marker_con_'+id+'" >';
-			sData += '<img src="/_sdk/img/'+adminPageSettings.APP_NAME+'/icon_marker_0'+marker_type+'.png" /> ';
+			sData += '<div style="width:35px;text-align:center;display:inline-block"><img  src="'+image_icon+'"';
+			
+			if(adminPageSettings.validURL(image_url)){
+				sData += 'class="custom_image"';
+			}else{
+				sData += '';
+			}
+			
+				
+				sData += '/></div> ';
 			sData += '<input type="text"  value="'+locations+' ('+lat+','+lng+','+marker_type+')" readonly name="'+adminPageSettings.APP_NAME+'_marker[]"  class="textbox" style="width:350px" />';
 			sData += '<a  href="javascript:adminPageSettings.remove_marker('+id+');"  > <img src="/_sdk/img/'+adminPageSettings.APP_NAME+'/close_btn.png" class="close_btn" style="vertical-align:middle;display:inline-block" /></a>';	
 			sData += '</div>';
@@ -453,7 +399,7 @@ var adminPageSettings = {
 					lat = parseFloat(aLatlng[0]);
 					lng = parseFloat(aLatlng[1]);
 					lng_len = aLatlng[2].length;
-					marker = parseInt(aLatlng[2].substr(0,lng_len-1));
+					marker = aLatlng[2].substr(0,lng_len-1);
 
 					sData[i] = {lat: lat, lng: lng,loc: aLocation['loc'],marker: marker};
 				});
@@ -464,6 +410,107 @@ var adminPageSettings = {
 
 		},
 		
+		/*remove marker*/
+		remove_marker: function(div_id){
+			
+			var id = $("#"+adminPageSettings.APP_NAME+"_location_wrap").children("div").size();
+			
+			if(id > 1){
+				$("#googlemapmarker_marker_con_"+div_id).remove();
+				adminPageSettings.initialize();
+				
+			}else{
+				$("#googlemapmarker_marker_con_"+div_id).append("<span style='color:red;font-style:italic;' class='err_div_loc' >You must maintain at least one(1) marker.</span>");
+				$(".err_div_loc").delay(1500).fadeOut(400).slideUp();
+			}
+			
+			
+			
+		},
+		/*display options*/
+		displayOption: function(){
+			
+			var image = $("#pg_disqus_arrow img").attr("src");
+			var img_up = "/_sdk/img/"+adminPageSettings.APP_NAME+"/arrow_up.png";
+			var img_down = "/_sdk/img/"+adminPageSettings.APP_NAME+"/arrow_down.png";
+			
+			$("#pg_googlemapmark_option").slideToggle();
+			
+			if(image == img_up){
+				$("#pg_disqus_arrow img").attr("src",img_down);
+			}else{
+				$("#pg_disqus_arrow img").attr("src",img_up);
+			}
+			
+		},
+		
+		/*save settings*/
+		setting_submit: function(form){
+			
+			
+			//if(oValidator.formName.getMessage(adminPageSettings.APP_NAME+'_form')){
+				
+				/*gather variables*/
+				var zoom_level = parseInt($("#"+adminPageSettings.APP_NAME+"_zoom").val());
+				var map_type = $("#"+adminPageSettings.APP_NAME+"_maptype").val();
+				var locations = adminPageSettings.get_locations();
+				var display_options ={
+						"zoom":{
+							"zoom_flag": $('input:checkbox[name=zoom_control]').is(':checked') ? 1 : 0 ,
+							"zoom_size": $("#zoom_size").val(),
+							"zoom_position": $("#zoom_position").val()
+								},
+						"map":{
+							"map_flag": $('input:checkbox[name=map_type_control]').is(':checked') ? 1 : 0,
+							"map_type": $("#map_type").val(),
+							"map_position": $("#map_type_position").val()
+								},
+						"scale":{
+							"scale_flag": $('input:checkbox[name=scale_control]').is(':checked') ? 1 : 0,
+							"scale_position": $("#scale_control_position").val()
+								},
+						"street":{
+							"street_flag": $('input:checkbox[name=street_view_control]').is(':checked') ? 1 : 0,
+							"street_position": $("#street_view_position").val()
+								}
+						
+					} 
+				
+					/*ajax submit*/
+					$.ajax({  
+						url: usbuilder.getUrl("apiExec"),
+						type: 'post',
+						dataType: 'json',
+						data: {
+						action: 'setting_submit',
+						get_zoom_level: zoom_level,
+						get_map_type: map_type,
+						get_locations: locations,
+						get_display_options: display_options
+						
+					},
+						success: function(data){
+						
+						if(data.Data === true){
+							adminPageSettings.close_popup(adminPageSettings.APP_NAME+"_add_marker");
+							oValidator.generalPurpose.getMessage(true, "Saved successfully");
+							scroll(0,0);
+							}else{
+								oValidator.generalPurpose.getMessage(false, "Failed");
+								scroll(0,0);
+							}
+					
+						}
+					});
+			//}
+			
+		},
+		
+		/*reset to default*/
+		reset_default: function(){
+			window.location= usbuilder.getUrl("adminPageSettings")+"&reset=true";
+			
+		},
 		/*
 		 * display a dialog box
 		 * @param aDecs = define the description for the dialog box
@@ -489,6 +536,11 @@ var adminPageSettings = {
 		 */
 		close_popup: function(sConId){
 			popup.close(sConId);
+		},
+		
+		validURL: function(str) {
+			var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+			return regexp.test(str);
 		}
 	
 };
@@ -504,7 +556,7 @@ $(document).ready(function(){
 		adminPageSettings.initialize();
 	});
 	
-	
+	adminPageSettings.enable_image_url();
 	adminPageSettings.initialize();
 
 });

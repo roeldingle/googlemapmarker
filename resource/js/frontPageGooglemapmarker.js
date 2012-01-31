@@ -48,6 +48,7 @@ var frontPageGooglemapmarker = {
 			/*display option*/
 			var display_options = $("#"+frontPageGooglemapmarker.APP_NAME+"_display_options").val();
 			var aDisplayOption = eval("(" + display_options + ")");
+
 			
 			/*zoom type option*/
 			var zoom_type = aDisplayOption['zoom']['zoom_size'];
@@ -78,15 +79,15 @@ var frontPageGooglemapmarker = {
 			var streetPos = aDisplayOption['street']['street_position'];
 			
 			/*assign the values*/
-			var zoomControl_flag = aDisplayOption['zoom']['zoom_flag'];
+			var zoomControl_flag = (aDisplayOption['zoom']['zoom_flag'] == 0)?false:true;
 			var zoomControl_option = zoom_option;
 			var zoomControl_position = frontPageGooglemapmarker.position_option(zoomPos);
-			var mapTypeControl_flag = aDisplayOption['map']['map_flag'];
+			var mapTypeControl_flag = (aDisplayOption['map']['map_flag'] == 0)?false:true;
 			var mapTypeControl_option = mapOption;
 			var mapTypeControl_position = frontPageGooglemapmarker.position_option(mapPos);
-			var scaleControl_flag = aDisplayOption['scale']['scale_flag'];
+			var scaleControl_flag = (aDisplayOption['scale']['scale_flag'] == 0)?false:true;
 			var scaleControl_position = frontPageGooglemapmarker.position_option(scalePos);
-			var streetControl_flag = aDisplayOption['street']['street_flag'];
+			var streetControl_flag = (aDisplayOption['street']['street_flag'] == 0)?false:true;
 			var streetControl_position = frontPageGooglemapmarker.position_option(streetPos);
 			
 			/*setmap options*/
@@ -170,7 +171,7 @@ var frontPageGooglemapmarker = {
 					lat = parseFloat(aLatlng[0]);
 					lng = parseFloat(aLatlng[1]);
 					lng_len = aLatlng[2].length;
-					marker = parseInt(aLatlng[2].substr(0,lng_len-1));
+					marker = aLatlng[2].substr(0,lng_len-1);
 
 					sData[i] = {lat: lat, lng: lng,loc: aLocation['loc'],marker: marker};
 				});

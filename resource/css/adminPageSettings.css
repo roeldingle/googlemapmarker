@@ -28,3 +28,4 @@ a:hover{text-decoration:underline !important;}
 .radio_btn_label {float:left !important;margin:0 0 0 5px!important}
 
 input.btn_apply {width:103px;height:25px !important;border:none;display:inline-block;text-align:center;padding:4px 0 5px 0;background:#000 url(/_sdk/img/googlemapmarker/bg_btn_input.gif) repeat-x;font-weight:bold;font-size:13px;color:#fff;text-decoration:none !important;vertical-align:middle}
+.custom_image {width:25px;height:25px}

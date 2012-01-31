@@ -67,8 +67,20 @@
 				
 				<!-- loop the array containing the marker data -->
 				<?php  $counter = 0; foreach($aMarkers as $val){ ?>
-					<div class="add_location" id="<?php echo $APP_NAME;?>_marker_con_<?php echo $counter;?>" >
-						<img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_0<?php echo $val['marker'];?>.png" />
+					<div class="add_location" id="<?php echo $APP_NAME;?>_marker_con_<?php echo $counter;?>"  >
+						<div style="width:35px;text-align:center;display:inline-block">
+						<img src="
+						<?php 
+						
+						if(preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $val['marker']) == true){
+							echo $val['marker'] .'" class="custom_image"';
+						}else{
+							echo "/_sdk/img/googlemapmarker/icon_marker_0".$val['marker'].".png" ;
+						}
+						?>
+						
+						" />
+						</div>
 						<input type="text"  value="<?php echo $val['loc'];?>(<?php echo $val['lat'];?>,<?php echo $val['lng'];?>,<?php echo $val['marker'];?>)" readonly name="<?php echo $APP_NAME;?>_marker[]"  class="textbox" value="" style="width:350px" />
 						<a  href="javascript:adminPageSettings.remove_marker(<?php echo $counter;?>);"  ><img src="/_sdk/img/<?php echo $APP_NAME;?>/close_btn.png" class="close_btn" style="vertical-align:middle;display:inline-block" /></a>	
 					</div>
@@ -80,7 +92,7 @@
 			
 				<p>
 				
-					<input type="button" class="btn" value="Add New Marker" onclick="adminPageSettings.open_popup('googlemapmarker_add_marker',400,'Add Marker');" style="margin-top:15px;margin-left:19px;width:352px;height:20px;cursor:pointer" />
+					<input type="button" class="btn" value="Add New Marker" onclick="adminPageSettings.open_popup('googlemapmarker_add_marker',400,'Add Marker');" style="margin-top:15px;margin-left:35px;width:352px;height:20px;cursor:pointer" />
 				</p>
 				
 			</span>
@@ -203,31 +215,40 @@
 	            <a href="javascript:void(0)" class="btn_nor_01 btn_width_st1" title="Set center" onclick="adminPageSettings.set_search();">Search</a>
 	        </p>
 	        <p>
-	         <ul class="marker_type">
+	         <ul class="marker_type" style="width:500px;">
             	<li>
                     <label for="marker_00"><img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_00.png" alt="google marker 0"></label>
-                    <input type="radio" name="marker_type" id="marker_00" class="input_rdo" checked="checked" value="0">
+                    <input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_00" class="input_rdo" checked="checked" value="0">
                 </li>
                 <li>
                     <label for="marker_01"><img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_01.png" alt="google marker 1"></label>
-                    <input type="radio" name="marker_type" id="marker_01" class="input_rdo"  value="1">
+                    <input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_01" class="input_rdo"  value="1">
                 </li>
                 <li>
                     <label for="marker_02"><img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_02.png" alt="google marker 2"></label>
-                    <input type="radio" name="marker_type" id="marker_02" class="input_rdo" value="2">
+                    <input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_02" class="input_rdo" value="2">
                 </li>
                 <li>
                     <label for="marker_03"><img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_03.png" alt="google marker 3"></label>
-                    <input type="radio" name="marker_type" id="marker_03" class="input_rdo" value="3">
+                    <input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_03" class="input_rdo" value="3">
                 </li>
                 <li>
                     <label for="marker_04"><img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_04.png" alt="google marker 4"></label>
-                    <input type="radio" name="marker_type" id="marker_04" class="input_rdo" value="4">
+                    <input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_04" class="input_rdo" value="4">
                 </li>
                 <li>
                     <label for="marker_05"><img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_05.png" alt="google marker 5"></label>
-                    <input type="radio" name="marker_type" id="marker_05" class="input_rdo" value="5">
+                    <input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_05" class="input_rdo" value="5">
                 </li>
+               
+                <li>
+					<span style="float:left;width:220px;margin-top:29px;margin-left:8px">
+                   		<input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_06"  value="6" style="float:left;width:15px;clear:none;" />
+                    	<input type="text"  value="Icon url for marker *(15 X 26)" id="<?php echo $APP_NAME;?>_image_url" disabled style="float:left;width:184px;margin-top:-2px;margin-left:5px;clear:none;font-style:italic;padding-left:5px;" />
+					</span>	
+                    
+                </li>
+               
             </ul>
 	        
 	        
