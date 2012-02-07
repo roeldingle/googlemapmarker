@@ -9,6 +9,20 @@ var frontPageGooglemapmarker = {
 		 * initialize and define the map for preview
 		 */
 		initialize: function(){ 
+			//get the size of parent div
+			var iMapWidth = $("#map_canvas").parent().width();
+			var iMapHeight = $("#map_canvas").parent().height();
+			
+			/*set a minimum value if height is 0*/
+			var iMinheigth = 200;
+			
+			if(iMapHeight == 0){
+				iMapHeight = iMinheigth;
+			}
+			
+			$("#map_canvas").css("width",iMapWidth);
+			$("#map_canvas").css("height",iMapHeight);
+			
 			/*call the map init func*/
 			frontPageGooglemapmarker.create_map();	
 		},

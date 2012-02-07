@@ -9,7 +9,7 @@
 <input type="hidden"  id="<?php echo $APP_NAME;?>_lng" value="<?php echo $iLng;?>" />
 
 		
-<form name="<?php echo $APP_NAME;?>_form" id="googlemapmark_form" action="setup.php" method="POST">
+<form name="<?php echo $APP_NAME;?>_form" id="googlemapmark_form"  method="POST">
 	<div id="<?php echo $APP_NAME;?>_wrap">
 		<div id="<?php echo $APP_NAME;?>_mapcontainer">
 			<div id="map_canvas"></div>	
@@ -67,8 +67,8 @@
 				
 				<!-- loop the array containing the marker data -->
 				<?php  $counter = 0; foreach($aMarkers as $val){ ?>
-					<div class="add_location" id="<?php echo $APP_NAME;?>_marker_con_<?php echo $counter;?>"  >
-						<div style="width:35px;text-align:center;display:inline-block">
+					<div class="add_location" id="<?php echo $APP_NAME;?>_marker_con_<?php echo $counter;?>" style="width:700px;height:40px;" >
+						<div style="float:left;width:35px;text-align:center;display:inline-block">
 						<img src="
 						<?php 
 						
@@ -79,10 +79,10 @@
 						}
 						?>
 						
-						" />
+						" / style="float:left">
 						</div>
-						<input type="text"  value="<?php echo $val['loc'];?>(<?php echo $val['lat'];?>,<?php echo $val['lng'];?>,<?php echo $val['marker'];?>)" readonly name="<?php echo $APP_NAME;?>_marker[]"  class="textbox" value="" style="width:350px" />
-						<a  href="javascript:adminPageSettings.remove_marker(<?php echo $counter;?>);"  ><img src="/_sdk/img/<?php echo $APP_NAME;?>/close_btn.png" class="close_btn" style="vertical-align:middle;display:inline-block" /></a>	
+						<input type="text"  value="<?php echo $val['loc'];?>(<?php echo $val['lat'];?>,<?php echo $val['lng'];?>,<?php echo $val['marker'];?>)" readonly name="<?php echo $APP_NAME;?>_marker[]"  class="textbox" value="" style="float:left;width:350px;margin-top:3px" />
+						<a  href="javascript:adminPageSettings.remove_marker(<?php echo $counter;?>);"  ><img src="/_sdk/img/<?php echo $APP_NAME;?>/close_btn.png" class="close_btn" style="float:left;margin-top:4px;margin-left:5px;vertical-align:middle;display:inline-block" /></a>	
 					</div>
 				<?php $counter++; } ?>
 				
@@ -205,13 +205,16 @@
 
 
 
+
+
 <!-- Add marker POPUP -->
 <div id="<?php echo $APP_NAME;?>_add_marker" style="width: 350px; z-index: 10002; left: 766px; top: 394px;display:none;">
 	<div class="admin_popup_contents">
+	<form id="<?php echo $APP_NAME;?>_popup_form" name="<?php echo $APP_NAME;?>_popup_form" method="POST" >
 	    <div class="input_area">
 	        <p>
 	            <label for="how">Address or Place</label>
-	            <input type="text" class="fix" value="" id="<?php echo $APP_NAME;?>_search_field">
+	            <input type="text" class="fix" value="" id="<?php echo $APP_NAME;?>_search_field" fw-filter="isFill" >
 	            <a href="javascript:void(0)" class="btn_nor_01 btn_width_st1" title="Set center" onclick="adminPageSettings.set_search();">Search</a>
 	        </p>
 	        <p>
@@ -260,8 +263,12 @@
 	       		 <ul id="<?php echo $APP_NAME;?>_result" class="place_check_list"></ul>
 	        </div>
 	    </div><a href="javascript: adminPageSettings.add_location();" class="btn_ly" title="Add new marker">Add New Marker</a>
+	    </form>
      </div>
 </div>
+
+<!--form for reset-->
+<form method="POST" action="<?php echo $sUrl;?>" name="<?php echo $APP_NAME;?>_form_reset" id="<?php echo $APP_NAME;?>_form_reset" ><input type="hidden" name="<?php echo $APP_NAME;?>_reset" value="true" /></form>
 
 
 

@@ -31,14 +31,14 @@ class adminPageSettings extends Controller_Admin
     	$this->importCSS(__CLASS__);
     	
     	/*save form validator*/
-    	usbuilder()->validator(array('form' => $APP_NAME.'_form'));
+    	usbuilder()->validator(array('form' => $APP_NAME.'_popup_form'));
     	
     	/*set the user setting*/
     	$aUserSetting = $this->oGet->getRow(2,null);
     	
     	
     	/*set default values*/
-    	if(empty($aUserSetting) || isset($aArgs['reset'])){
+    	if(empty($aUserSetting) || isset($aArgs['googlemapmarker_reset'])){
     		$aUserSetting = array(
     				'zoom_level' => 1,
     				'map_type' => "Normal",

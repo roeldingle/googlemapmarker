@@ -58,11 +58,9 @@ class frontPageGooglemapmarker extends Controller_Front
     	$sData = '';
     	
     	//map container
-    	$sData .= '<div id="'.$APP_NAME.'_wrap" >';
-    	$sData .= '<div id="'.$APP_NAME.'_mapcontainer"  >';
-    	$sData .= '<div id="map_canvas" style="width:100%;height:100%;" ></div>';
-    	$sData .= '</div>';
-    	$sData .= '</div>';
+    	
+    	$sData .= '<div id="map_canvas" ></div>';
+    	
     	
     	//markers
     	$sData .= '<div id="'.$APP_NAME.'_location_wrap" >';
