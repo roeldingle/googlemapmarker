@@ -383,8 +383,8 @@ var adminPageSettings = {
 					
 					
 					var sData = '';
-					sData += '<div class="add_location" id="'+adminPageSettings.APP_NAME+'_marker_con_'+id+'" >';
-					sData += '<div style="width:35px;text-align:center;display:inline-block"><img  src="'+image_icon+'"';
+					sData += '<div class="add_location" id="'+adminPageSettings.APP_NAME+'_marker_con_'+id+'" style="margin-top:-2px;margin-bottom:10px;">';
+					sData += '<div style="float:left;width:35px;margin:0 9px 0px -10px;text-align:center;display:inline"><img  src="'+image_icon+'"';
 					
 					if(adminPageSettings.validURL(image_url)){
 						sData += 'class="custom_image"';
@@ -394,8 +394,8 @@ var adminPageSettings = {
 					
 						
 						sData += '/></div> ';
-					sData += '<input type="text"  value="'+locations+' ('+lat+','+lng+','+marker_type+')" readonly name="'+adminPageSettings.APP_NAME+'_marker[]"  class="textbox" style="width:350px" />';
-					sData += '<a  href="javascript:adminPageSettings.remove_marker('+id+');"  > <img src="/_sdk/img/'+adminPageSettings.APP_NAME+'/close_btn.png" class="close_btn" style="vertical-align:middle;display:inline-block" /></a>';	
+					sData += '<input type="text"  value="'+locations+' ('+lat+','+lng+','+marker_type+')" readonly name="'+adminPageSettings.APP_NAME+'_marker[]"  class="textbox" style="float:left;width:350px;margin-top:5px;margin-right:6px" />';
+					sData += '<a  href="javascript:adminPageSettings.remove_marker('+id+');"  ><img src="/_sdk/img/'+adminPageSettings.APP_NAME+'/close_btn.png" class="close_btn" style="margin-top:5px;vertical-align:middle;display:inline-block" /></a>';	
 					sData += '</div>';
 					
 					$("#"+adminPageSettings.APP_NAME+"_location_wrap").append(sData);
