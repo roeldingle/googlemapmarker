@@ -8,8 +8,7 @@ class adminPageSettings extends Controller_Admin
     {
 
     require_once('builder/builderInterface.php');
-    $sInitScript = usbuilder()->init($this->Request->getAppID(), $aArgs);
-    $this->writeJs($sInitScript);
+	usbuilder()->init($this, $aArgs);
 
  	/*assign objects*/
     $this->oGet = new modelGet;
