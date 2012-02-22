@@ -32,8 +32,12 @@ class adminPageSettings extends Controller_Admin
     	/*save form validator*/
     	usbuilder()->validator(array('form' => $APP_NAME.'_popup_form'));
     	
+    	/*sequence*/
+    	$iSeq = $aArgs['seq'];
+    	$this->assign('iSeq', $iSeq);
+    	
     	/*set the user setting*/
-    	$aUserSetting = $this->oGet->getRow(2,null);
+    	$aUserSetting = $this->oGet->getRow(2,"seq =".$iSeq);
     	
     	
     	/*set default values*/

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <lang>
-    <var name="lang">Language</var>
-    <var name="name">English</var>
+    <menu>  
+        <var name="googlemapmarker">Googlemapmarker</var>
+    </menu>
+    <var name="lang">subject</var>
+    <var name="name">Subject</var>
 </lang>

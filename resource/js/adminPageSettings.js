@@ -496,6 +496,7 @@ var adminPageSettings = {
 			//if(oValidator.formName.getMessage(adminPageSettings.APP_NAME+'_form')){
 				
 				/*gather variables*/
+				var iSeq = $("#SEQ").val();
 				var zoom_level = parseInt($("#"+adminPageSettings.APP_NAME+"_zoom").val());
 				var map_type = $("#"+adminPageSettings.APP_NAME+"_maptype").val();
 				var locations = adminPageSettings.get_locations();
@@ -528,6 +529,7 @@ var adminPageSettings = {
 						dataType: 'json',
 						data: {
 						action: 'setting_submit',
+						get_seq: iSeq,
 						get_zoom_level: zoom_level,
 						get_map_type: map_type,
 						get_locations: locations,

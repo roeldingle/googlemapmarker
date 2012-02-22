@@ -67,7 +67,7 @@ var sdk_popup = {
         'scrollbars' : 'no',
         'resizable ' : 'no',
         'position' : null,
-        'classname' : 'ly_set',
+        'classname' : 'sdk_ly_set',
         'addclass' : null , 
         'openCallback' : null,
         'closeCallback' : null
@@ -163,7 +163,7 @@ var sdk_popup = {
         if(this.opts.drag_header && jQuery.ui) {
             var dragOpts = {
                 cursor: "move",
-                handle: "#"+popup.opts.drag_header,
+                handle: "#"+sdk_popup.opts.drag_header,
                 start : this.dragStart,
                 stop : this.dragEnd,
                 containment: "#wrap",
@@ -188,7 +188,7 @@ var sdk_popup = {
         this.opts  = $.extend(this.defaults, options);
         this.sContentClass = "admin_popup_contents";
         
-        if (!options.classname) this.opts.classname = 'ly_set';
+        if (!options.classname) this.opts.classname = 'sdk_ly_set';
         if (!options.title) this.opts.title = null;
         if (!options.height) this.opts.height = null;
         if (!options.top)  this.opts.top  = null;

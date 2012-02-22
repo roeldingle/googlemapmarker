@@ -7,6 +7,7 @@
 <input type="hidden"  id="APP_NAME" value="<?php echo $APP_NAME;?>" />
 <input type="hidden"  id="<?php echo $APP_NAME;?>_lat" value="<?php echo $iLat;?>" />
 <input type="hidden"  id="<?php echo $APP_NAME;?>_lng" value="<?php echo $iLng;?>" />
+<input type="hidden" id="SEQ" value="<?php echo $iSeq;?>" /><!--pluginurl-->
 
 		
 <form name="<?php echo $APP_NAME;?>_form" id="googlemapmark_form"  method="POST">
