@@ -38,6 +38,15 @@ var Googlemap = {
 			  icon: image_icon
 			});
 		
+		/*Show infowindow on mouseove
+		  google.maps.event.addListener(Googlemap.markers, 'click', function() {
+			    document.write(lat+","+lng);
+		 });*/
+		
+		
+		
+		
+		
 	},
 	validURL: function(str) {
 		var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
