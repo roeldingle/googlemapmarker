@@ -43,10 +43,10 @@
 		<th><label>Map Type</label></th>
 		<td>
 			<select id="<?php echo $APP_NAME;?>_maptype"  name="<?php echo $APP_NAME;?>_maptype"  >
-				<option <?php echo ($aUserSetting['map_type'] == "Normal") ? "selected" : "" ;?> >Normal</option>
-				<option <?php echo ($aUserSetting['map_type'] == "Satellite") ? "selected" : "" ;?> >Satellite</option>
-				<option <?php echo ($aUserSetting['map_type'] == "Hybrid") ? "selected" : "" ;?> >Hybrid</option>
-				<option <?php echo ($aUserSetting['map_type'] == "Terrain") ? "selected" : "" ;?> >Terrain</option>
+				<option value="Normal" <?php echo ($aUserSetting['map_type'] == "Normal") ? "selected" : "" ;?> >Normal</option>
+				<option value="Satellite" <?php echo ($aUserSetting['map_type'] == "Satellite") ? "selected" : "" ;?> >Satellite</option>
+				<option value="Hybrid" <?php echo ($aUserSetting['map_type'] == "Hybrid") ? "selected" : "" ;?> >Hybrid</option>
+				<option value="Terrain" <?php echo ($aUserSetting['map_type'] == "Terrain") ? "selected" : "" ;?> >Terrain</option>
 			</select>
 		</td>
 	</tr>

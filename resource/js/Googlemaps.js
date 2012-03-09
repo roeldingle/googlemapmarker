@@ -25,7 +25,7 @@ var Googlemap = {
 			if(bIfUrl){
 				var image_icon = marker_type;
 			}else{
-				var image_icon = '/_sdk/img/googlemapmarker/icon_marker_0'+marker_type+'.png';
+				var image_icon = "/_sdk/img/googlemapmarker/icon_marker_0"+marker_type+".png";
 			}
 		
 		
@@ -36,16 +36,7 @@ var Googlemap = {
 			  clickable: true,
 			  draggable: true,
 			  icon: image_icon
-			});
-		
-		/*Show infowindow on mouseove
-		  google.maps.event.addListener(Googlemap.markers, 'click', function() {
-			    document.write(lat+","+lng);
-		 });*/
-		
-		
-		
-		
+			});	
 		
 	},
 	validURL: function(str) {

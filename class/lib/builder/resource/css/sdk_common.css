@@ -138,6 +138,9 @@ a.sdk_add_link:link, a.sdk_add_link:visited {margin-left:10px;font-size:11px;col
 .sdk_ly_set textarea {width:100%;height:50px;margin:9px 0 0 0;padding:10px 0}
 .sdk_ly_set .sdk_validate_wrap {margin:-20px 0 -80px 210px}
 
+.sdk_ly_set code {overflow:auto;display:block;height:124px;margin-bottom:27px;padding:15px;border:1px solid #abadb3;background:#fff;text-align:left;}
+.sdk_ly_set code xmp {font-size:11px}
+
 .sdk_ly_set a.clse {position:absolute;right:-1px;top:0;padding:0;background:url([IMG]/builderLib/ly_close_btn.gif) no-repeat !important;display:inline-block;width:34px;height:34px;font-size:0;}
 .sdk_ly_set a.clse:hover.clse, .ly_set a.clse:active.clse {text-decoration:none}
 

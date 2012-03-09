@@ -10,8 +10,8 @@ var frontPageGooglemapmarker = {
 		 */
 		initialize: function(){ 
 			//get the size of parent div
-			var iMapWidth = $("#map_canvas").parent().width();
-			var iMapHeight = $("#map_canvas").parent().height();
+			var iMapWidth = $(".map_canvas").parent().width();
+			var iMapHeight = $(".map_canvas").parent().height();
 			
 			/*set a minimum value if height is 0*/
 			var iMinheigth = 200;
@@ -20,8 +20,8 @@ var frontPageGooglemapmarker = {
 				iMapHeight = iMinheigth;
 			}
 			
-			$("#map_canvas").css("width",iMapWidth);
-			$("#map_canvas").css("height",iMapHeight);
+			$(".map_canvas").css("width",iMapWidth);
+			$(".map_canvas").css("height",iMapHeight);
 			
 			/*call the map init func*/
 			frontPageGooglemapmarker.create_map();	
@@ -33,7 +33,7 @@ var frontPageGooglemapmarker = {
 		create_map: function(){
 			
 			/*get zoom*/
-			var zoom = parseInt($("#"+frontPageGooglemapmarker.APP_NAME+"_zoom_level").val());
+			var zoom = parseInt($("."+frontPageGooglemapmarker.APP_NAME+"_zoom_level").val());
 					
 			/*get center lat lng*/
 			var aMarkerData = frontPageGooglemapmarker.get_locations();
@@ -43,7 +43,7 @@ var frontPageGooglemapmarker = {
 			
 			
 			/*get the maptype*/
-			var map_type = $("#"+frontPageGooglemapmarker.APP_NAME+"_map_type").val();
+			var map_type = $("."+frontPageGooglemapmarker.APP_NAME+"_map_type").val();
 			switch(map_type){
 			case "Normal":
 				maptype = google.maps.MapTypeId.ROADMAP;
@@ -60,7 +60,7 @@ var frontPageGooglemapmarker = {
 			}
 			
 			/*display option*/
-			var display_options = $("#"+frontPageGooglemapmarker.APP_NAME+"_display_options").val();
+			var display_options = $("."+frontPageGooglemapmarker.APP_NAME+"_display_options").val();
 			var aDisplayOption = eval("(" + display_options + ")");
 
 			
@@ -165,7 +165,7 @@ var frontPageGooglemapmarker = {
 			var aLatlng = new Array();
 			var aMarCap = new Array();
 			var i = 0;
-			var id = $("#"+frontPageGooglemapmarker.APP_NAME+"_location_wrap").children("div").size();
+			var id = $("."+frontPageGooglemapmarker.APP_NAME+"_location_wrap").children("div").size();
 			
 			$.each($("input[name='"+frontPageGooglemapmarker.APP_NAME+"_marker[]']"), function(){
 				idx = $(this).val();

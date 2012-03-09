@@ -349,7 +349,8 @@ var adminPageSettings = {
 					
 					var aMarker_loc = marker_loc.split("+",3);
 					
-					var locations = aMarker_loc[0];
+					var locations = aMarker_loc[0].replace("(","[");
+					locations = locations.replace(")","]");
 					var lat = parseFloat(aMarker_loc[1]);
 					var lng = parseFloat(aMarker_loc[2]);
 					

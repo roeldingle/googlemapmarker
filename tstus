@@ -1,0 +1,83 @@
+commit 8e7a28c013a3db5ea3d8b9c673818839d7c9bf55
+Author: sdk_roel <sdk_roel@simplexi.com>
+Date:   Mon Feb 27 16:50:22 2012 +0800
+
+    2/27
+
+commit 56425a1e65d7affb065e76ebf752da7862195c5c
+Author: sdk_roel <sdk_roel@simplexi.com>
+Date:   Wed Feb 22 15:14:20 2012 +0800
+
+    adminPage finish/seq added
+
+commit a0514cd3e64a8e1abc8a56f91df0fed2ddabf8f9
+Author: sdk_roel <sdk_roel@simplexi.com>
+Date:   Wed Feb 22 13:18:27 2012 +0800
+
+    edited:adminPage for seq *installSeqDelete/frontPage seq not yet
+
+commit b94be51c093f10f1e75cadf294875ed1611502df
+Author: sdk_roel <sdk_roel@simplexi.com>
+Date:   Wed Feb 15 16:52:00 2012 +0800
+
+    updated/set changes
+
+commit c1e10a1785bae58a11f491e9d9e079e24ee67ad7
+Author: sdk_roel <sdk_roel@simplexi.com>
+Date:   Wed Feb 15 11:42:13 2012 +0800
+
+    updated the source code app is ok
+
+commit dc669f7586841f98d2db33665235849b46320194
+Author: sdk_roel <sdk_roel@simplexi.com>
+Date:   Tue Feb 7 16:59:15 2012 +0800
+
+    ok::::
+
+commit a293a8cf9792180932c562d5b8d2dc559262b4a6
+Author: sdk_roel <sdk_roel@simplexi.com>
+Date:   Tue Jan 31 15:23:18 2012 +0800
+
+    day4 finished with added feature (option to use a image url as marker icon):
+
+commit c25e3be7c6f44bb0c32f47e7d5ec6741bb580f93
+Author: sdk_roel <sdk_roel@simplexi.com>
+Date:   Mon Jan 30 17:10:04 2012 +0800
+
+    day3 finished front and admin settings....ready for QA:
+
+commit e6ea8b73fc95c965fec650dcf5118e01bc42b3af
+Author: sdk_roel <sdk_roel@simplexi.com>
+Date:   Mon Jan 30 11:31:50 2012 +0800
+
+    day3 finish admin settings:
+
+commit e434c86c658f8aa2874132ec264943526eedf47a
+Author: sdk_roel <sdk_roel@simplexi.com>
+Date:   Fri Jan 27 17:01:16 2012 +0800
+
+    day2 controllers finished:
+
+commit 061dbc01e9e1967f8b05277838288cad38f8d2a4
+Author: sdk_roel <sdk_roel@simplexi.com>
+Date:   Fri Jan 27 16:30:34 2012 +0800
+
+    day 2 started the contols for the map:
+
+commit beb070ee7b95c576a4c6221e5158d947ffa2bd21
+Author: sdk_roel <sdk_roel@simplexi.com>
+Date:   Thu Jan 26 17:10:44 2012 +0800
+
+    day1 the add locations are working:
+
+commit 4092363a58f178f25c791c78b987a3c589c70610
+Author: Your Name <you@example.com>
+Date:   Wed Jan 25 15:26:52 2012 +0900
+
+    Googlemap marker
+
+commit 4736ac4304dd68b7a4e65cd65f11cdab2aaf7f65
+Author: Your Name <you@example.com>
+Date:   Mon Dec 19 11:39:54 2011 +0900
+
+    Init...

@@ -56,7 +56,9 @@ class builderCore
             $aAppInfo = array(
                 'class_type' => 'front',
                 'exec_type' => 'page',
-            	'seq' => $oController->getSequence()
+            	'seq' => $oController->getSequence(),
+                'block' => strtolower(str_replace('frontPage', '', get_class($oController))),
+            	'group' => $oController->getOption('block_group')
             );
         } elseif ($oController instanceof Controller_FrontExec) {
             $aAppInfo = array(
@@ -177,6 +179,53 @@ class builderCore
         return $sUrl;
     }
 
+    public function getParam($sKey)
+    {
+        $sResultKey = $this->getParamKey($sKey);
+        return $this->_aArgs[$sResultKey];
+    }
+
+    public function getParamKey($sKey = null)
+    {
+        $aAppInfo = $this->getAppInfo();
+        if ($aAppInfo['class_type'] == 'front') {
+            if ($aAppInfo['seq']) {
+                $sResultKey = strtolower(APP_ID) . '_' . $aAppInfo['seq'];
+                $iGroup = $this->getController()->getOption("block_group");
+                if($iGroup) $sResultKey .= "_".$iGroup;
+                $sResultKey .= ':' . $sKey;
+            } else {
+                $sResultKey = strtolower(APP_ID) . ':' . $sKey;
+            }
+        } else {
+            $sResultKey = $sKey;
+        }
+
+        return $sResultKey;
+    }
+
+    /**
+     * 프론트용 module query
+     * @param Array $aOverwriteInfo 직접 지정할 정보
+     */
+    public function getModuleSelector($aOverwriteInfo = array())
+    {
+        $aInfo = $this->getAppInfo();
+        foreach($aOverwriteInfo as $sKey => $oValue) {
+            $aInfo[$sKey] = $oValue;
+        }
+        $iGroup = $aOverwriteInfo["group"];
+        if(empty($iGroup)) $iGroup = $aInfo["group"];
+
+        $sQuery = strtolower($aInfo["app_id"]);
+        if($aInfo["seq"]) $sQuery .= ">".$aInfo["seq"];
+        if($aInfo["block"]) $sQuery .= ">".strtolower($aInfo["block"]);
+        if($iGroup) $sQuery .= "[".$iGroup."]";
+        else $sQuery .= "[^]";
+
+        return $sQuery;
+    }
+
     public function vd($mData, $sKey = null)
     {
         $_SESSION['usbuilder']['vd']['show'] = true;
@@ -249,6 +298,8 @@ class builderCore
         $sInitScript .= file_get_contents($sPath);
         $sPath = APP_PATH . '/class/lib/builder/resource/js/sdk_common.js';
         $sInitScript .= file_get_contents($sPath);
+        $sPath = APP_PATH . '/class/lib/builder/resource/js/sdk_multi.js';
+        $sInitScript .= file_get_contents($sPath);
         $sInitScript .= "
             aBuilderUrlInfo = {
             			'admin' : {
@@ -303,8 +354,8 @@ class builderCore
             return $sXML;
         } elseif ($aArgs['mode'] == 'lang') {
             $oDOMDocument = new DOMDocument();
-            if (isset($aArgs['filename'])) {
-                $oDOMDocument->load(APP_PATH . '/resource/lang/' . $aArgs['lang'] . '/' . $aArgs['filename'] .'.xml');
+            if (isset($aArgs['name'])) {
+                $oDOMDocument->load(APP_PATH . '/resource/lang/' . $aArgs['lang'] . '/' . $aArgs['name'] .'.xml');
             } else {
                 $oDOMDocument->load(APP_PATH . '/resource/lang/' . $aArgs['lang'] . '/common.xml');
             }
@@ -334,6 +385,7 @@ class builderCore
 
     public function helper($sHelperName)
     {
+        require_once('builder/builderHelper.php');
         require_once('builder/helper/' . $sHelperName .'/helper' . ucfirst($sHelperName) . 'Handler.php');
         $oHelper = getInstance('helper' . ucfirst($sHelperName) . 'Handler');
         return $oHelper;
