@@ -94,7 +94,6 @@ class frontPageGooglemapmarker extends Controller_Front
 			
 			marker_init: function(locations,lat,lng,marker_type){
 				
-		
 				var bIfUrl = Googlemap.validURL(marker_type);
 					
 					if(bIfUrl){
@@ -102,7 +101,6 @@ class frontPageGooglemapmarker extends Controller_Front
 					}else{
 						var image_icon = "/_sdk/img/googlemapmarker/icon_marker_0"+marker_type+".png";
 					}
-				
 				
 				Googlemap.markers = new google.maps.Marker({
 					  position: new google.maps.LatLng(lat,lng),
@@ -112,9 +110,8 @@ class frontPageGooglemapmarker extends Controller_Front
 					  draggable: true,
 					  icon: image_icon
 					});	
-				
 			},
-			validURL: function(str) {
+			validURL: function(str){
 				var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
 				return regexp.test(str);
 			}
@@ -246,7 +243,6 @@ class frontPageGooglemapmarker extends Controller_Front
 						 
 						
 						var aMarkers = frontPageGooglemapmarker.get_locations();
-					console.log(aMarkers);
 					
 						$.each(aMarkers, function(key, val){
 							Googlemap.marker_init(val.loc,val.lat,val.lng,val.marker);

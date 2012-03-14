@@ -66,7 +66,9 @@ class adminPageSettings extends Controller_Admin
     	$this->assign("aDisplayOpt",$aDisplayOpt);
     	$this->assign("aPositionData",$aPositionData);
     	
-
+    	/*for the additional links in the settins page*/
+    	$this->assign("bExtensionView", ($aArgs['etype'] ? 1 : 0));
+    	
     	/*set the template*/
     	$this->view(__CLASS__);
 

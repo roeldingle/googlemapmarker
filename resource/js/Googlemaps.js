@@ -40,7 +40,7 @@ var Googlemap = {
 		
 	},
 	validURL: function(str) {
-		var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+		var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?.(?:jpg|gif|png)/
 		return regexp.test(str);
 	}
 };

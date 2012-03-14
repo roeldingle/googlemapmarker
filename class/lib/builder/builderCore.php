@@ -2,6 +2,7 @@
 class builderCore
 {
     static $aAppInfo = array();
+    static private $_aAssignForJsData;
     private $_aBuilderUrlInfo = array();
     private $_aArgs = array();
     private $_oController;
@@ -314,18 +315,22 @@ class builderCore
             				'url' : '" . $this->_aBuilderUrlInfo['api']['url'] . "',
             				'param' : '" . $this->_aBuilderUrlInfo['api']['param'] . "'
             			}
-    		}
-    		aAppInfo = $.parseJSON('" . json_encode($aAppInfo) . "')
+    		};
+
+            aAppInfo = $.parseJSON('" . json_encode($aAppInfo) . "');
             usbuilder._setAppInfo(aAppInfo);
             usbuilder._setBuilderUrlInfo(aBuilderUrlInfo);
         ";
 
+        /**
+         *
         //Message Print
         $aMessage = $_SESSION['usbuilder']['function']['message'];
         if(is_array($aMessage)){
             $sInitScript .= "sdk_message.show('" . $aMessage['message'] . "','" . $aMessage['type'] . "');";
             unset($_SESSION['usbuilder']['function']['message']);
         }
+         */
 
         return $sInitScript;
     }
@@ -339,6 +344,9 @@ class builderCore
     {
         $sPath = APP_PATH . '/class/lib/builder/resource/css/sdk_common.css';
         $sInitCss .= file_get_contents($sPath);
+
+        //echo '/////';
+        //var_dump($sInitCss);
 
         return $sInitCss;
     }
@@ -366,13 +374,13 @@ class builderCore
         } elseif ($aArgs['mode'] == 'install') {
             $sPath = APP_PATH . '/install/install.sql';
             $sQuery .= file_get_contents($sPath);
-            $mResult = $this->checkResult($this->_query($sQuery));
-            return $mResult;
+            $aResult = $this->Dump($sQuery);
+            return $aResult['Result'];
         } elseif ($aArgs['mode'] == 'uninstall') {
             $sPath = APP_PATH . '/install/uninstall.sql';
             $sQuery .= file_get_contents($sPath);
-            $mResult = $this->checkResult($this->_query($sQuery));
-            return $mResult;
+            $aResult = $this->Dump($sQuery);
+            return $aResult['Result'];
         }
     }
 
@@ -413,5 +421,42 @@ class builderCore
             $mResult = false;
         }
         return $mResult;
+    }
+
+    public function Dump($sSqlDump)
+    {
+        $sSqlDump = trim($sSqlDump);
+        if (strpos($sSqlDump, ";\r\n")>0 || strpos($sSqlDump, ";\n")>0) {
+            if (strpos($sSqlDump, ";\r\n")>0) {
+                $aSqlDump = explode(";\r\n", $sSqlDump);
+            } else if (strpos($sSqlDump, ";\n")>0) {
+                $aSqlDump = explode(";\n", $sSqlDump);
+            }
+        } else {
+            $aSqlDump = array($sSqlDump);
+        }
+
+        $aSqlResult = array();
+        $aSqlResult['Result'] = false;
+        $aSqlResult['Query'] = array();
+
+        $bResult = true;
+
+        foreach ($aSqlDump as $sSql) {
+            if ($sSql) {
+                $mResult = $this->_query($sSql);
+
+                if ($mResult!==false) {
+                    $aSqlResult['Query'][] = array(true, $sSql, '');
+                } else {
+                    $aSqlResult['Query'][] = array(false, $sSql, mysql_error($this->RES));
+                    $bResult = false;
+                }
+            }
+        }
+
+        $aSqlResult['Result'] = $bResult;
+
+        return $aSqlResult;
     }
 }

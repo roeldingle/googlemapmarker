@@ -363,13 +363,13 @@ var adminPageSettings = {
 					if(marker_type == 6){
 						
 						
-						var bIfUrl = adminPageSettings.validURL(image_url);
+						var bIfUrl = Googlemap.validURL(image_url);
 						
 						if(bIfUrl){
 							image_icon = image_url;
 							marker_type = image_url;
 						}else{
-							$("#"+adminPageSettings.APP_NAME+"_image_url").prepend("Invalid url");
+							$("#"+adminPageSettings.APP_NAME+"_result").html("Invalid image url");
 							return;
 						}
 					

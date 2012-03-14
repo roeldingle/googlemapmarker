@@ -9,6 +9,7 @@
 <input type="hidden"  id="<?php echo $APP_NAME;?>_lng" value="<?php echo $iLng;?>" />
 <input type="hidden" id="SEQ" value="<?php echo $iSeq;?>" /><!--pluginurl-->
 
+<span><label>App ID :</label> <?php echo ucwords($APP_NAME);?></span><br /><br />
 		
 <form name="<?php echo $APP_NAME;?>_form" id="googlemapmark_form"  method="POST">
 	<div id="<?php echo $APP_NAME;?>_wrap">
@@ -202,6 +203,12 @@
 <div class="tbl_lb_wide_btn">
 		<input type="button" value="Save" class="btn_apply" onclick="adminPageSettings.setting_submit()" />
 		<a href="#" class="add_link" title="Reset to default" onclick="adminPageSettings.reset_default()" >Reset to Default</a>
+		<?php 
+			 if ($bExtensionView === 1){
+			            echo '<a href="/admin/sub/?module=ExtensionPageManage&code=' . ucfirst(APP_ID) . '&etype=MODULE" class="add_link" title="Return to Manage ' . ucfirst(APP_ID) . '">Return to Manage ' . ucfirst(APP_ID) . '</a>
+			            <a href="/admin/sub/?module=ExtensionPageMyextensions" class="add_link" title="Return to My Extensions">Return to My Extensions</a>';
+			  }
+		?>
 </div>
 
 

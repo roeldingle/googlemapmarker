@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <lang>
      
-        <var name="googlemapmarker">Googlemapmarker</var>
-    
+   <var name="googlemapmarker">Googlemapmarker</var>
+    <var name="menu_contents">Settings</var>
     <var name="lang">subject</var>
     <var name="name">Subject</var>
 </lang>
