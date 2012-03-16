@@ -216,13 +216,13 @@
 
 
 <!-- Add marker POPUP -->
-<div id="<?php echo $APP_NAME;?>_add_marker" style="width: 350px; z-index: 10002; left: 766px; top: 394px;display:none;">
-	<div class="admin_popup_contents">
+<div id="<?php echo $APP_NAME;?>_add_marker" style="display:none;"  >
+	<div  class="admin_popup_contents">
 	<form id="<?php echo $APP_NAME;?>_popup_form" name="<?php echo $APP_NAME;?>_popup_form" method="POST" >
 	    <div class="input_area">
 	        <p>
 	            <label for="how">Address or Place</label>
-	            <input type="text" class="fix" value="" id="<?php echo $APP_NAME;?>_search_field" fw-filter="isFill" >
+	            <input type="text" class="fix" value="" id="<?php echo $APP_NAME;?>_search_field"  >
 	            <a href="javascript:void(0)" class="btn_nor_01 btn_width_st1" title="Set center" onclick="adminPageSettings.set_search();">Search</a>
 	        </p>
 	        <p>
@@ -255,7 +255,7 @@
                 <li>
 					<span style="float:left;width:220px;margin-top:29px;margin-left:8px">
                    		<input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_06"  value="6" style="float:left;width:15px;clear:none;" />
-                    	<input type="text"  value="Icon url for marker *(15 X 26)" id="<?php echo $APP_NAME;?>_image_url" disabled style="float:left;width:184px;margin-top:-2px;margin-left:5px;clear:none;font-style:italic;padding-left:5px;" />
+                    	<input type="text"  value="Icon url for marker *(15 X 26)" id="<?php echo $APP_NAME;?>_image_url" disabled style="float:left;width:184px;margin-top:5px;margin-left:5px;clear:none;font-style:italic;padding-left:5px;" />
 					</span>	
                     
                 </li>

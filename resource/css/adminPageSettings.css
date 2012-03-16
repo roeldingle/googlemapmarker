@@ -2,8 +2,9 @@
 
 a{text-decoration:none !important;}
 a:hover{text-decoration:underline !important;}
-
-#googlemapmarker_loader{margin:30px 0 0 160px}
+#googlemapmarker_result_con {text-align:center}
+#googlemapmarker_loader{width:48px;height:48px;margin-top:35px;display:inline-block}
+.input_area a {margin-top:-8px;display:inline-block}
 
 
 .module_title {text-decoration:none;background: url("../img/right_scroll.gif") no-repeat center right; padding-right:5px;cursor:pointer;}
@@ -29,3 +30,7 @@ a:hover{text-decoration:underline !important;}
 
 input.btn_apply {width:103px;height:25px !important;border:none;display:inline-block;text-align:center;padding:4px 0 5px 0;background:#000 url(/_sdk/img/googlemapmarker/bg_btn_input.gif) repeat-x;font-weight:bold;font-size:13px;color:#fff;text-decoration:none !important;vertical-align:middle}
 .custom_image {width:25px;height:25px;display:inline-block}
+
+.place_check_list li {width:100%;display:inline-block}
+.place_check_list .radio_btn_search {float:left;}
+.place_check_list .radio_btn_label {float:left;width:320px;text-align:left;display:inline-block}

@@ -540,7 +540,7 @@ var adminPageSettings = {
 						success: function(data){
 						
 						if(data.Data === true){
-							adminPageSettings.close_popup(adminPageSettings.APP_NAME+"_add_marker");
+							$("#"+adminPageSettings.APP_NAME+"_add_marker").hide();
 							oValidator.generalPurpose.getMessage(true, "Saved successfully");
 							scroll(0,0);
 							
@@ -571,15 +571,18 @@ var adminPageSettings = {
 				//empty the result list
 				$("#googlemapmarker_result").empty();
 			}
+		
 			
 			
 			/*create popup*/
-			popup.load(sContainer).skin("admin").layer({
+			sdk_popup.load(sContainer).skin("admin").layer({
 				width: iWidth,
 				title: sTitle,
 				resize: false,
 				draggable: true	
 			});
+			
+			
 			
 		},
 		
