@@ -601,11 +601,7 @@ var adminPageSettings = {
 	
 };
 
-
 $(document).ready(function(){
-	
-	
-
 	
 	$('#zoom_control, #map_type_control,#scale_control,#street_view_control').click(function() {
 		adminPageSettings.initialize();
