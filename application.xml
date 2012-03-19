@@ -18,7 +18,7 @@
     </admin>
     <front use="on">
         <ifs>
-            <if class="frontPagegooglemapmarker" permission="off" code-assist="on" desc="for displaying the app in front"></if>
+            <if class="frontPageGooglemapmarker" permission="off" code-assist="on" desc="for displaying the app in front"></if>
         </ifs>
     </front>
 </application>
