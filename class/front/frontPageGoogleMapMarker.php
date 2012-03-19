@@ -1,5 +1,5 @@
 <?php
-class frontPageGooglemapmarker extends Controller_Front
+class frontPageGoogleMapMarker extends Controller_Front
 {
 
 	protected $oGet;
