@@ -75,7 +75,7 @@ class frontPageGoogleMapMarker extends Controller_Front
     	$sData .= "<input type='text' class='".$APP_NAME."_display_options' value='".$aUserSetting['display_options']."' />";
     	$sData .= '</div>';
     
-    	$this->assign("Googlemapmarker",$sData);
+    	$this->assign("display",$sData);
     	
     	$this->init_js($aArgs);
     }
@@ -122,6 +122,11 @@ class frontPageGoogleMapMarker extends Controller_Front
 					APP_NAME: "googlemapmarker",
 					
 					initialize: function(){ 
+						
+						//give 100% size for the parent div
+						$M(".map_canvas").parent().css("width","100%");
+						$M(".map_canvas").parent().css("height","100%");
+						
 						//get the size of parent div
 						var iMapWidth = $M(".map_canvas").parent().width();
 						var iMapHeight = $M(".map_canvas").parent().height();
