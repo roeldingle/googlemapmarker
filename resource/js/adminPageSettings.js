@@ -567,6 +567,8 @@ var adminPageSettings = {
 		 */
 		open_popup: function(sContainer,iWidth,sTitle){
 			
+			$("#"+adminPageSettings.APP_NAME+"_search_field").removeClass("warn_border");
+			
 			if(sContainer == "googlemapmarker_add_marker"){
 				//empty the result list
 				$("#googlemapmarker_result").empty();

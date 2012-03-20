@@ -1,5 +1,5 @@
 @CHARSET "ISO-8859-1";
-
+.warn_border{border: 2px solid red;}
 a{text-decoration:none !important;}
 a:hover{text-decoration:underline !important;}
 #googlemapmarker_result_con {text-align:center}

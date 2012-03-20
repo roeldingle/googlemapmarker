@@ -84,38 +84,38 @@ class frontPageGoogleMapMarker extends Controller_Front
     	
     	$sJs = '
 		sdk_Module("'.usbuilder()->getModuleSelector().'").ready(function($M){
-			var Googlemap = {
-			map : null,
-			
-			map_init : function(myOptions)
-			{
-			 Googlemap.map = new google.maps.Map($M(".map_canvas").get(0), myOptions);	
-			},
-			
-			marker_init: function(locations,lat,lng,marker_type){
-				
-				var bIfUrl = Googlemap.validURL(marker_type);
+				var Googlemap = {
+					map : null,
+
+					map_init : function(myOptions)
+					{
+					 Googlemap.map = new google.maps.Map($M(".map_canvas").get(0), myOptions);	
+					},
 					
-					if(bIfUrl){
-						var image_icon = marker_type;
-					}else{
-						var image_icon = "/_sdk/img/googlemapmarker/icon_marker_0"+marker_type+".png";
+					marker_init: function(locations,lat,lng,marker_type){
+						
+						var bIfUrl = Googlemap.validURL(marker_type);
+							
+							if(bIfUrl){
+								var image_icon = marker_type;
+							}else{
+								var image_icon = "/_sdk/img/googlemapmarker/icon_marker_0"+marker_type+".png";
+							}
+						
+						Googlemap.markers = new google.maps.Marker({
+							  position: new google.maps.LatLng(lat,lng),
+							  map: Googlemap.map,
+							  title: locations,
+							  clickable: true,
+							  draggable: true,
+							  icon: image_icon
+							});	
+					},
+					validURL: function(str){
+						var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+						return regexp.test(str);
 					}
-				
-				Googlemap.markers = new google.maps.Marker({
-					  position: new google.maps.LatLng(lat,lng),
-					  map: Googlemap.map,
-					  title: locations,
-					  clickable: true,
-					  draggable: true,
-					  icon: image_icon
-					});	
-			},
-			validURL: function(str){
-				var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-				return regexp.test(str);
-			}
-		};
+			};
 		
 			var frontPageGooglemapmarker = {
 			
@@ -205,7 +205,6 @@ class frontPageGoogleMapMarker extends Controller_Front
 						var scalePos = aDisplayOption.scale.scale_position;
 						var streetPos = aDisplayOption.street.street_position;
 						
-						
 						var zoomControl_flag = (aDisplayOption.zoom.zoom_flag == 0)?false:true;
 						var zoomControl_option = zoom_option;
 						var zoomControl_position = frontPageGooglemapmarker.position_option(zoomPos);
@@ -246,7 +245,6 @@ class frontPageGoogleMapMarker extends Controller_Front
 						 
 						 Googlemap.map_init(myOptions);
 						 
-						
 						var aMarkers = frontPageGooglemapmarker.get_locations();
 					
 						$.each(aMarkers, function(key, val){
@@ -254,7 +252,6 @@ class frontPageGoogleMapMarker extends Controller_Front
 							
 						});
 						       
-						
 					},
 			
 					get_locations: function(){
@@ -275,11 +272,10 @@ class frontPageGoogleMapMarker extends Controller_Front
 						var id = $M("."+frontPageGooglemapmarker.APP_NAME+"_location_wrap").children("div").size();
 						
 						$.each($M("input[name=\'"+frontPageGooglemapmarker.APP_NAME+"_marker[]\']"), function(){
-							idx = $(this).val();
+							 idx = $(this).val();
 							 strid += "+"+idx;
 					
 							location_str = strid.substr(1);
-							
 							
 							locations = location_str.split("+");
 							

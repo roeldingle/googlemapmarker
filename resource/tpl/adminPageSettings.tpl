@@ -222,7 +222,7 @@
 	    <div class="input_area">
 	        <p>
 	            <label for="how">Address or Place</label>
-	            <input type="text" class="fix" value="" id="<?php echo $APP_NAME;?>_search_field"  >
+	            <input type="text" class="fix" value="" id="<?php echo $APP_NAME;?>_search_field" fw-filter="isFill" >
 	            <a href="javascript:void(0)" class="btn_nor_01 btn_width_st1" title="Set center" onclick="adminPageSettings.set_search();">Search</a>
 	        </p>
 	        <p>
