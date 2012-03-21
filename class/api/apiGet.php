@@ -7,7 +7,7 @@ class apiGet extends Controller_Api
     {
 
         require_once('builder/builderInterface.php');
-         usbuilder()->init($this->Request->getAppID(), $aArgs);
+        usbuilder()->init($this, $aArgs);
         
         $sSearch = str_replace(" ","%20",$aArgs['get_search']);
 		
