@@ -72,6 +72,7 @@ class builderCore
             );
         }
 
+        $aAppInfo['lang_code'] = $oController->getLangCode();
         $aAppInfo['app_id'] = ucfirst(APP_ID);
         if (!$aAppInfo['seq']) $aAppInfo['seq'] = $aArgs['seq'];
 
@@ -345,9 +346,6 @@ class builderCore
         $sPath = APP_PATH . '/class/lib/builder/resource/css/sdk_common.css';
         $sInitCss .= file_get_contents($sPath);
 
-        //echo '/////';
-        //var_dump($sInitCss);
-
         return $sInitCss;
     }
 
@@ -355,33 +353,41 @@ class builderCore
     {
         if ($aArgs['mode'] == 'conf') {
             $oDOMDocument = new DOMDocument();
-            if (isset($aArgs['xml'])) {
-                $oDOMDocument->load(APP_PATH . '/conf/' . 'conf.' . $aArgs['xml'] .'.xml');
-            }
-            $sXML = $oDOMDocument->saveXML();
-            return $sXML;
-        } elseif ($aArgs['mode'] == 'lang') {
-            $oDOMDocument = new DOMDocument();
-            if (isset($aArgs['name'])) {
-                $oDOMDocument->load(APP_PATH . '/resource/lang/' . $aArgs['lang'] . '/' . $aArgs['name'] .'.xml');
+            $sPath = APP_PATH . '/conf/' . 'conf.' . $aArgs['xml'] .'.xml';
+            if (file_exists($sPath)) {
+                $oDOMDocument->load($sPath);
+                $mResult = $oDOMDocument->saveXML();
             } else {
-                $oDOMDocument->load(APP_PATH . '/resource/lang/' . $aArgs['lang'] . '/common.xml');
+                $mResult = false;
             }
-            $sXML = $oDOMDocument->saveXML();
-            return $sXML;
+        } elseif ($aArgs['mode'] == 'lang') {
+            if (!$aArgs['lang']) $aArgs['lang'] = $this->getAppInfo('lang_code');
+            $oDOMDocument = new DOMDocument();
+            if (!empty($aArgs['name'])) {
+                $sPath = APP_PATH . '/resource/lang/' . $aArgs['lang'] . '/' . $aArgs['name'] .'.xml';
+            } else {
+                $sPath = APP_PATH . '/resource/lang/' . $aArgs['lang'] . '/common.xml';
+            }
+            if (file_exists($sPath)) {
+                $oDOMDocument->load($sPath);
+                $mResult = $oDOMDocument->saveXML();
+            } else {
+                $mResult = false;
+            }
         } elseif ($aArgs['mode'] == 'helper') {
-            return usbuilder()->helper($aArgs['helpername'])->api($aArgs);
+            $mResult = usbuilder()->helper($aArgs['helpername'])->api($aArgs);
         } elseif ($aArgs['mode'] == 'install') {
             $sPath = APP_PATH . '/install/install.sql';
             $sQuery .= file_get_contents($sPath);
             $aResult = $this->Dump($sQuery);
-            return $aResult['Result'];
+            $mResult = $aResult['Result'];
         } elseif ($aArgs['mode'] == 'uninstall') {
             $sPath = APP_PATH . '/install/uninstall.sql';
             $sQuery .= file_get_contents($sPath);
             $aResult = $this->Dump($sQuery);
-            return $aResult['Result'];
+            $mResult = $aResult['Result'];
         }
+        return $mResult;
     }
 
     private function _query($sQuery)

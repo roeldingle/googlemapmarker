@@ -287,7 +287,7 @@ var adminPageSettings = {
 				$("#"+adminPageSettings.APP_NAME+"_err_con").append("<p class='error_message'>Error retriving data.<p>");
 				return;
 				}
-				,60000);
+				,30000);
 			
 			/*get the location via ajax*/
 			$.ajax({
@@ -299,7 +299,7 @@ var adminPageSettings = {
 						get_search: sAddress
 					},
 				success: function(data){
-		
+						
 						if (data['Data'].length > 0){
 							$("#"+adminPageSettings.APP_NAME+"_result").empty();
 							string = '';
@@ -369,7 +369,9 @@ var adminPageSettings = {
 							image_icon = image_url;
 							marker_type = image_url;
 						}else{
-							$("#"+adminPageSettings.APP_NAME+"_result").html("Invalid image url");
+							//$("#"+adminPageSettings.APP_NAME+"_result").html("Invalid image url");
+							var sErrMes = "Invalid image url";
+							adminPageSettings.alert_box(sErrMes);
 							return;
 						}
 					
@@ -458,7 +460,7 @@ var adminPageSettings = {
 		
 		/*remove marker*/
 		remove_marker: function(div_id){
-			
+			$(".err_div_loc").remove();
 			var id = $("#"+adminPageSettings.APP_NAME+"_location_wrap").children("div").size();
 			
 			if(id > 1){
