@@ -1,4 +1,5 @@
 @CHARSET "ISO-8859-1";
+#googlemapmarker_err_here{height:10px;color:red;margin-top:0px;}
 .warn_border{border: 2px solid red;}
 a{text-decoration:none !important;}
 a:hover{text-decoration:underline !important;}

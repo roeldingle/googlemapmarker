@@ -329,22 +329,25 @@ var adminPageSettings = {
 				
 				/*if the location list is not yet set*/
 				if(bMarker === false){
-					
-					/*error message*/
+					$("#"+adminPageSettings.APP_NAME+"_err_here").html("<span class='err_div_loc' >Please click search to display locations</span>");
+					$(".err_div_loc").delay(1500).fadeOut(400).slideUp();
+					/*error message
 					var sErrMess = "Please search address or place";
-					adminPageSettings.alert_box(sErrMess);
+					adminPageSettings.alert_box(sErrMess);*/
 					
 				}else{
 				
 					var marker_loc = $('input:radio[name=marker_loc]:checked').val();
 					
-					if(marker_loc == undefined){
-						
-						/*error message*/
+					if(marker_loc === undefined){
+						$("#"+adminPageSettings.APP_NAME+"_err_here").html("<span class='err_div_loc' >Please select location for the marker</span>");
+						$(".err_div_loc").delay(1500).fadeOut(400).slideUp();
+						//$("#"+adminPageSettings.APP_NAME+"_result").html("Please select location for the marker");
+						/*error message
 						var sErrMess = "Please select location for the marker";
-						
 						adminPageSettings.alert_box(sErrMess);
-						
+						return;
+						*/
 					}
 					
 					var aMarker_loc = marker_loc.split("+",3);
@@ -356,23 +359,23 @@ var adminPageSettings = {
 					
 					/*set the added options to the marker*/
 					var marker_type = $('input:radio[name=marker_type]:checked').val();
-					
 					var image_url = $("#"+adminPageSettings.APP_NAME+"_image_url").val();
 					
 					/*image*/
 					if(marker_type == 6){
-						
-						
 						var bIfUrl = Googlemap.validURL(image_url);
 						
 						if(bIfUrl){
 							image_icon = image_url;
 							marker_type = image_url;
 						}else{
-							//$("#"+adminPageSettings.APP_NAME+"_result").html("Invalid image url");
-							var sErrMes = "Invalid image url";
-							adminPageSettings.alert_box(sErrMes);
+							$("#"+adminPageSettings.APP_NAME+"_err_here").html("<span class='err_div_loc' >Please input a valid image url</span>");
+							$(".err_div_loc").delay(1500).fadeOut(400).slideUp();
 							return;
+							//$("#"+adminPageSettings.APP_NAME+"_result").html("Invalid image url");
+							//var sErrMes = "Invalid image url";
+							//adminPageSettings.alert_box(sErrMes);
+							//return;
 						}
 					
 					}else{
