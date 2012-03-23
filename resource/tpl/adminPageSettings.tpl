@@ -110,7 +110,7 @@
 	<div>
 		<p>
 			<span class="module_title" onclick="adminPageSettings.displayOption();" style="cursor:pointer;">Display Options </span>
-			<span id="pg_disqus_arrow" class="symb_style" style="font-family:??" onclick="adminPageSettings.displayOption();"><img src="/_sdk/img/<?php echo $APP_NAME;?>/arrow_up.png"></span>
+			<span id="pg_disqus_arrow" class="symb_style" style="font-family:??" onclick="adminPageSettings.displayOption();"><img src="/_sdk/img/<?php echo $APP_NAME;?>/arrow_down.png"></span>
 		</p>
 	</div>
 	<!-- visible if display option is selected -->
