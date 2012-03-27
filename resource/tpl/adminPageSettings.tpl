@@ -9,7 +9,6 @@
 <input type="hidden"  id="<?php echo $APP_NAME;?>_lng" value="<?php echo $iLng;?>" />
 <input type="hidden" id="SEQ" value="<?php echo $iSeq;?>" /><!--pluginurl-->
 
-<span><label>App ID :</label> <?php echo ucwords($APP_NAME);?></span><br /><br />
 		
 <form name="<?php echo $APP_NAME;?>_form" id="googlemapmark_form"  method="POST">
 	<div id="<?php echo $APP_NAME;?>_wrap">
