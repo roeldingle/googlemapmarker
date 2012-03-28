@@ -39,6 +39,7 @@ var frontPageGooglemapmarker = {
 			var aMarkerData = frontPageGooglemapmarker.get_locations();
 			var iLastMarker = aMarkerData.length - 1;
 			var lat = aMarkerData[iLastMarker]['lat'];
+			
 			var lng = aMarkerData[iLastMarker]['lng'];
 			
 			

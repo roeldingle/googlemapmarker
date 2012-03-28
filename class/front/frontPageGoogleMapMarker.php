@@ -20,6 +20,8 @@ class frontPageGoogleMapMarker extends Controller_Front
     protected function display($aArgs){
     	
     	/*define page*/
+    	$sGooglemaps_url = 'https://maps.googleapis.com/maps/api/js?v=3&sensor=true';
+    	$this->externalJS($sGooglemaps_url);
     	$APP_NAME = "googlemapmarker";
     	$this->assign("APP_NAME",$APP_NAME);
     	
@@ -99,7 +101,7 @@ class frontPageGoogleMapMarker extends Controller_Front
 							if(bIfUrl){
 								var image_icon = marker_type;
 							}else{
-								var image_icon = "/_sdk/img/googlemapmarker/icon_marker_0"+marker_type+".png";
+								var image_icon = "[IMG]/icon_marker_0"+marker_type+".png";
 							}
 						
 						Googlemap.markers = new google.maps.Marker({
@@ -117,7 +119,7 @@ class frontPageGoogleMapMarker extends Controller_Front
 					}
 			};
 		
-			var frontPageGooglemapmarker = {
+			var frontPageGoogleMapMarker = {
 			
 					APP_NAME: "googlemapmarker",
 					
@@ -142,22 +144,24 @@ class frontPageGoogleMapMarker extends Controller_Front
 						$M(".map_canvas").css("height",iMapHeight);
 						
 						/*call the map init func*/
-						frontPageGooglemapmarker.create_map();	
+						frontPageGoogleMapMarker.create_map();	
 					},
 					
 					create_map: function(){
 						
-						var zoom = parseInt($M("."+frontPageGooglemapmarker.APP_NAME+"_zoom_level").val());
+						var zoom = parseInt($M("."+frontPageGoogleMapMarker.APP_NAME+"_zoom_level").val());
 						
-						var aMarkerData = frontPageGooglemapmarker.get_locations();
+						var aMarkerData = frontPageGoogleMapMarker.get_locations();
 						
 						
 						var iLastMarker = aMarkerData.length - 1;
 						var lat = aMarkerData[iLastMarker].lat;
 						
+						
+						
 						var lng = aMarkerData[iLastMarker].lng;
 						
-						var map_type = $M("."+frontPageGooglemapmarker.APP_NAME+"_map_type").val();
+						var map_type = $M("."+frontPageGoogleMapMarker.APP_NAME+"_map_type").val();
 						
 						
 						switch(map_type){
@@ -175,7 +179,7 @@ class frontPageGoogleMapMarker extends Controller_Front
 							break;
 						}
 						
-						var display_options = $M("."+frontPageGooglemapmarker.APP_NAME+"_display_options").val();
+						var display_options = $M("."+frontPageGoogleMapMarker.APP_NAME+"_display_options").val();
 						var aDisplayOption = eval("(" + display_options + ")");
 			
 						
@@ -207,14 +211,14 @@ class frontPageGoogleMapMarker extends Controller_Front
 						
 						var zoomControl_flag = (aDisplayOption.zoom.zoom_flag == 0)?false:true;
 						var zoomControl_option = zoom_option;
-						var zoomControl_position = frontPageGooglemapmarker.position_option(zoomPos);
+						var zoomControl_position = frontPageGoogleMapMarker.position_option(zoomPos);
 						var mapTypeControl_flag = (aDisplayOption.map.map_flag == 0)?false:true;
 						var mapTypeControl_option = mapOption;
-						var mapTypeControl_position = frontPageGooglemapmarker.position_option(mapPos);
+						var mapTypeControl_position = frontPageGoogleMapMarker.position_option(mapPos);
 						var scaleControl_flag = (aDisplayOption.scale.scale_flag == 0)?false:true;
-						var scaleControl_position = frontPageGooglemapmarker.position_option(scalePos);
+						var scaleControl_position = frontPageGoogleMapMarker.position_option(scalePos);
 						var streetControl_flag = (aDisplayOption.street.street_flag == 0)?false:true;
-						var streetControl_position = frontPageGooglemapmarker.position_option(streetPos);
+						var streetControl_position = frontPageGoogleMapMarker.position_option(streetPos);
 						
 						
 						 var myOptions = {
@@ -245,7 +249,7 @@ class frontPageGoogleMapMarker extends Controller_Front
 						 
 						 Googlemap.map_init(myOptions);
 						 
-						var aMarkers = frontPageGooglemapmarker.get_locations();
+						var aMarkers = frontPageGoogleMapMarker.get_locations();
 					
 						$.each(aMarkers, function(key, val){
 							Googlemap.marker_init(val.loc,val.lat,val.lng,val.marker);
@@ -269,9 +273,9 @@ class frontPageGoogleMapMarker extends Controller_Front
 						var aLatlng = new Array();
 						var aMarCap = new Array();
 						var i = 0;
-						var id = $M("."+frontPageGooglemapmarker.APP_NAME+"_location_wrap").children("div").size();
+						var id = $M("."+frontPageGoogleMapMarker.APP_NAME+"_location_wrap").children("div").size();
 						
-						$.each($M("input[name=\'"+frontPageGooglemapmarker.APP_NAME+"_marker[]\']"), function(){
+						$.each($M("input[name=\'"+frontPageGoogleMapMarker.APP_NAME+"_marker[]\']"), function(){
 							 idx = $(this).val();
 							 strid += "+"+idx;
 					
@@ -346,7 +350,7 @@ class frontPageGoogleMapMarker extends Controller_Front
 			
 		
 			
-			frontPageGooglemapmarker.initialize();
+			frontPageGoogleMapMarker.initialize();
     	});
     	';
     

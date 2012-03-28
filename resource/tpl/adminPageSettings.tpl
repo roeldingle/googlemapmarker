@@ -76,14 +76,14 @@
 						if(preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $val['marker']) == true){
 							echo $val['marker'] .'" class="custom_image"';
 						}else{
-							echo "/_sdk/img/googlemapmarker/icon_marker_0".$val['marker'].".png" ;
+							echo "[IMG]/icon_marker_0".$val['marker'].".png" ;
 						}
 						?>
 						
 						" / style="float:left">
 						</div>
 						<input type="text"  value="<?php echo $val['loc'];?>(<?php echo $val['lat'];?>,<?php echo $val['lng'];?>,<?php echo $val['marker'];?>)" readonly name="<?php echo $APP_NAME;?>_marker[]"  class="textbox" value="" style="float:left;width:350px;margin-top:3px" />
-						<a  href="javascript:adminPageSettings.remove_marker(<?php echo $counter;?>);"  ><img src="/_sdk/img/<?php echo $APP_NAME;?>/close_btn.png" class="close_btn" style="float:left;margin-top:4px;margin-left:5px;vertical-align:middle;display:inline-block" /></a>	
+						<a  href="javascript:adminPageSettings.remove_marker(<?php echo $counter;?>);"  ><img src="[IMG]/close_btn.png" class="close_btn" style="float:left;margin-top:4px;margin-left:5px;vertical-align:middle;display:inline-block" /></a>	
 					</div>
 				<?php $counter++; } ?>
 				
@@ -228,27 +228,27 @@
 	        <p>
 	         <ul class="marker_type" style="width:500px;">
             	<li>
-                    <label for="marker_00"><img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_00.png" alt="google marker 0"></label>
+                    <label for="marker_00"><img src="[IMG]/icon_marker_00.png" alt="google marker 0"></label>
                     <input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_00" class="input_rdo" checked="checked" value="0">
                 </li>
                 <li>
-                    <label for="marker_01"><img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_01.png" alt="google marker 1"></label>
+                    <label for="marker_01"><img src="[IMG]/icon_marker_01.png" alt="google marker 1"></label>
                     <input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_01" class="input_rdo"  value="1">
                 </li>
                 <li>
-                    <label for="marker_02"><img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_02.png" alt="google marker 2"></label>
+                    <label for="marker_02"><img src="[IMG]/icon_marker_02.png" alt="google marker 2"></label>
                     <input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_02" class="input_rdo" value="2">
                 </li>
                 <li>
-                    <label for="marker_03"><img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_03.png" alt="google marker 3"></label>
+                    <label for="marker_03"><img src="[IMG]/icon_marker_03.png" alt="google marker 3"></label>
                     <input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_03" class="input_rdo" value="3">
                 </li>
                 <li>
-                    <label for="marker_04"><img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_04.png" alt="google marker 4"></label>
+                    <label for="marker_04"><img src="[IMG]/icon_marker_04.png" alt="google marker 4"></label>
                     <input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_04" class="input_rdo" value="4">
                 </li>
                 <li>
-                    <label for="marker_05"><img src="/_sdk/img/<?php echo $APP_NAME;?>/icon_marker_05.png" alt="google marker 5"></label>
+                    <label for="marker_05"><img src="[IMG]/icon_marker_05.png" alt="google marker 5"></label>
                     <input type="radio" onclick="adminPageSettings.enable_image_url()" name="marker_type" id="marker_05" class="input_rdo" value="5">
                 </li>
                
@@ -276,7 +276,7 @@
 </div>
 
 <!--form for reset-->
-<form method="POST" action="<?php echo $sUrl;?>" name="<?php echo $APP_NAME;?>_form_reset" id="<?php echo $APP_NAME;?>_form_reset" ><input type="hidden" name="<?php echo $APP_NAME;?>_reset" value="true" /></form>
+<form method="POST" action="" name="<?php echo $APP_NAME;?>_form_reset" id="<?php echo $APP_NAME;?>_form_reset" ><input type="hidden" name="<?php echo $APP_NAME;?>_reset" value="true" /></form>
 
 
 
